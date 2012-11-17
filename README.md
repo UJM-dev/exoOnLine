@@ -8,3 +8,5 @@ Quick start
 ----------------------------------
 
 create an app/config/local/parameters.yml file according to app/config/local/parameters.yml.dist (currently only db settings are required)
+
+*Install the composer (http://getcomposer.org/).*
