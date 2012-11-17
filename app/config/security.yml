@@ -1,0 +1,70 @@
+jms_security_extra:
+    secure_all_services: false
+    expressions: true
+
+security:
+    encoders:
+        #Symfony\Component\Security\Core\User\User: plaintext
+        UJM\ExoBundle\Entity\User:
+            algorithm: md5
+            encode-as-base64: false
+            iterations: 1
+
+    role_hierarchy:
+        ROLE_ADMIN:       ROLE_USER
+        ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+
+    providers:
+        #in_memory:
+        #    memory:
+        #        users:
+        #            user:  { password: userpass, roles: [ 'ROLE_USER' ] }
+        #            admin: { password: adminpass, roles: [ 'ROLE_ADMIN' ] }
+        user_db:
+            entity: { class: UJM\ExoBundle\Entity\User, property: username }
+
+    firewalls:
+        dev:
+            pattern:  ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+        test_ws_area:
+            pattern:    ^/test_ws
+            http_basic:
+                realm: "Secured Demo Area"
+
+        #cas_firewall:
+        #    pattern: ^/
+        #    #tout ce les url non definies dans la partie access_control seront accessibles publiquement et sans aucune authentification
+        #    #anonymous: ~
+        #    trusted_sso:
+        #        manager: cas_manager
+        #        #login_action: BeSimpleSsoAuthBundle:TrustedSso:login
+        #        #pour ne pas generer d'url et etre redirige automatiquement apres authentification
+        #        login_action: false
+        #        #logout_action: BeSimpleSsoAuthBundle:TrustedSso:logout
+        #        logout_action: false
+
+        login_firewall:
+            pattern:    ^/all/login$
+            security: false
+
+        exo_firewall:
+            pattern:    ^/
+            provider: user_db
+            form_login:
+                check_path: /all/login_check
+                login_path: /all/login
+                #default_target_path: /home
+                #always_use_default_target_path: true
+            logout:
+                path:   /logout
+                target: /
+            #anonymous: ~
+            #http_basic:
+            #    realm: "Secured Demo Area"
+
+    access_control:
+        - { path: ^/admin, roles: ROLE_ADMIN }
+        #- { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
+        #- { path: ^/_internal/secure, roles: IS_AUTHENTICATED_ANONYMOUSLY, ip: 127.0.0.1 }

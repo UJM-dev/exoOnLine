@@ -1,0 +1,73 @@
+html, body, form, fieldset {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    color: #000;
+    font: normal 90% Tahoma, Verdana, Helvetica, Sans-Serif;
+}
+
+#page {    
+    width: 1200px;
+    margin: 0 auto;
+}
+
+a {
+    color: #08C;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+a img {
+    border: none;
+    text-decoration: none;
+}
+
+#header {
+    margin-top: 5px;
+}
+
+#footer {
+    border-top: 1px solid #CCC;
+    text-align: center;
+    color: #999;
+    font-size: 85%;
+}
+
+table, td, th, p {
+    font-size: 100%;
+}
+
+td, th {
+    padding: 2px 5px 2px 5px;
+    border-bottom: 1px solid #EDEDED;
+}
+
+th {
+    background-color: #FFCC66;
+}
+
+tr:hover {
+    background-color: #EDEDED;
+}
+
+h1 {
+    font-size: 150%;
+}
+
+/***********************************************   CSS Question / new   */
+
+
+#formulaire_interactions {
+        margin-top: 20px;
+        margin-bottom: 20px;
+        /*border: 2px solid white;*/
+}
+
+.label_bold label{
+    font-weight: bold;
+}

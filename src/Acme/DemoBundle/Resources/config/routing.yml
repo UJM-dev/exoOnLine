@@ -1,0 +1,3 @@
+AcmeDemoBundle_homepage:
+    pattern:  /{name}
+    defaults: { _controller: AcmeDemoBundle:Demo:hello}
