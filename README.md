@@ -1,4 +1,4 @@
-exoOnLine
+exoOnLine (V2)
 ========================
 
 exoOnLine is an applicatin of exercises online.
