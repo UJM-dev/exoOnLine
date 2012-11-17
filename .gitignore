@@ -4,7 +4,6 @@ composer.phar
 
 app/cache/*
 app/logs/*
-app/bootstrap*
 app/config/parameters.yml
 vendor/behat/*
 vendor/besimple/*
