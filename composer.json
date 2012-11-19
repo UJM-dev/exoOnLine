@@ -21,7 +21,8 @@
 	"besimple/sso-auth-bundle": "*",
 	"doctrine/doctrine-fixtures-bundle": "dev-master",
 	"friendsofsymfony/rest-bundle": "dev-master",
-	"behat/behat": "dev-master"
+	"behat/behat": "dev-master",
+        "stfalcon/tinymce-bundle": "dev-master"
 		
     },
     "scripts": {
