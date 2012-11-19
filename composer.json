@@ -1,6 +1,6 @@
 {
-    "name": "symfony/framework-standard-edition",
-    "description": "The \"Symfony Standard Edition\" distribution",
+    "name": "UJM/exoOnLine",
+    "description": "exoOnLine V2",
     "autoload": {
         "psr-0": { "": "src/" }
     },
