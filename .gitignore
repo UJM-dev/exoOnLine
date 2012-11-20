@@ -15,10 +15,12 @@ vendor/jdorn/*
 vendor/jms/*
 vendor/kriswallsmith/*
 vendor/monolog/*
+vendor/phpoption/*
 vendor/sensio/*
 vendor/swiftmailer/*
 vendor/symfony/*
 vendor/twig/*
 vendor/autoload.php
+
 web/bundles/*
 web/js/*
