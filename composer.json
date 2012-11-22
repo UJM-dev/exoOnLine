@@ -21,7 +21,10 @@
 	"besimple/sso-auth-bundle": "*",
 	"doctrine/doctrine-fixtures-bundle": "dev-master",
 	"friendsofsymfony/rest-bundle": "dev-master",
-	"behat/behat": "dev-master"
+        "behat/behat-bundle": "dev-master",
+        "behat/mink": "1.3.3",
+        "behat/mink-bundle": "dev-master",
+        "behat/sahi-client": "dev-master"
 		
     },
     "scripts": {

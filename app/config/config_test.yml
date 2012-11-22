@@ -12,10 +12,10 @@ web_profiler:
 
 swiftmailer:
     disable_delivery: true
-	
-#behat: ~
 
-#mink:   
-#    base_url:  http://localhost/exoNext-local2.1/trunk/web/app_test.php
-#    default_session: symfony
-#    sahi: ~
+behat: ~
+
+mink:   
+    base_url:  http://localhost/exoOnLine/web/app_test.php
+    default_session: symfony
+    sahi: ~
