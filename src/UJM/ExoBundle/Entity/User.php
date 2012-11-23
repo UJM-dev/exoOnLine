@@ -40,12 +40,14 @@ namespace UJM\ExoBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Bridge\Doctrine\Validator\Constraints as DoctrineAssert;
 
 /**
  * UJM\ExoBundle\Entity\User
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="UJM\ExoBundle\Entity\UserRepository")
+ * @DoctrineAssert\UniqueEntity("username")
  */
 class User implements UserInterface, \Serializable
 {
@@ -61,7 +63,7 @@ class User implements UserInterface, \Serializable
     /**
      * @var string $username
      *
-     * @ORM\Column(name="username", type="string", length=255)
+     * @ORM\Column(name="username", type="string", length=255, unique=true)
      */
     private $username;
 
