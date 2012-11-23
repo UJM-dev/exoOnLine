@@ -39,8 +39,6 @@ exo_login:
 
 exo_security_check:
     pattern:  /login_check
-    defaults: { _controller: "UJMExoBundle:Login:securityCheck" }
 
-exo__logout:
+exo_logout:
     pattern:  /logout
-    defaults: { _controller: "UJMExoBundle:Login:logout" }
