@@ -63,14 +63,4 @@ class LoginController extends Controller
             'error'         => $error,
         );*/
     }
-
-    public function securityCheckAction()
-    {
-        // The security layer will intercept this request
-    }
-
-    public function logoutAction()
-    {
-        // The security layer will intercept this request
-    }
 }
