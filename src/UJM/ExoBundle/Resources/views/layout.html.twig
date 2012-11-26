@@ -40,19 +40,19 @@
     <head>
         <title>{% block title %}{% endblock %}</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        
+
         {% block stylesheets %}
             <link rel="stylesheet" href="{{ asset('bundles/ujmexo/css/main.css') }}" type="text/css" media="all" />
             <link href="{{ asset('bundles/ujmexo/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
         {% endblock %}
-       
-        {% block javascripts %}      
+
+        {% block javascripts %}
             {#<script src="http://code.jquery.com/jquery-1.6.2.min.js"></script>#}
             <script src="{{ asset('bundles/ujmexo/js/jquery.js') }}"></script>
             <script src="{{ asset('bundles/ujmexo/bootstrap/js/bootstrap.min.js') }}"></script>
         {% endblock %}
-        
-         
+
+
 
     </head>
     <body>
@@ -75,7 +75,7 @@
                                         <li><a href="#">{{ "Administration" | trans }}</a></li>
                                     {% endif %}
                                     <li><a href="#">{{ "My account" | trans }}</a></li>
-                                    <li><a href="#"> ------ {{ "Exit" | trans }}</a></li>
+                                    <li><a href="{{ path('exo_logout') }}"> ------ {{ "Exit" | trans }}</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -83,7 +83,7 @@
                 {% endblock %}
             </div>
 
-            <div id="infos_liens">              
+            <div id="infos_liens">
             </div>
 
             <div id="content">

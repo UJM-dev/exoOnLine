@@ -40,14 +40,16 @@ namespace UJM\ExoBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Bridge\Doctrine\Validator\Constraints as DoctrineAssert;
 
 /**
  * UJM\ExoBundle\Entity\User
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="UJM\ExoBundle\Entity\UserRepository")
+ * @DoctrineAssert\UniqueEntity("username")
  */
-class User implements UserInterface
+class User implements UserInterface, \Serializable
 {
     /**
      * @var integer $id
@@ -61,7 +63,7 @@ class User implements UserInterface
     /**
      * @var string $username
      *
-     * @ORM\Column(name="username", type="string", length=255)
+     * @ORM\Column(name="username", type="string", length=255, unique=true)
      */
     private $username;
 
@@ -101,8 +103,8 @@ class User implements UserInterface
     /**
      * @ORM\ManyToMany(targetEntity="UJM\ExoBundle\Entity\Groupes")
      */
-    private $groupes;      
-    
+    private $groupes;
+
     /**
      * Constructs a new instance of UserRole / groupes
      */
@@ -111,11 +113,11 @@ class User implements UserInterface
         $this->userRole = new ArrayCollection();
         $this->groupes = new ArrayCollection();
     }
-     
+
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -135,7 +137,7 @@ class User implements UserInterface
     /**
      * Get username
      *
-     * @return string 
+     * @return string
      */
     public function getUsername()
     {
@@ -155,7 +157,7 @@ class User implements UserInterface
     /**
      * Get password
      *
-     * @return string 
+     * @return string
      */
     public function getPassword()
     {
@@ -175,7 +177,7 @@ class User implements UserInterface
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -195,7 +197,7 @@ class User implements UserInterface
     /**
      * Get firstname
      *
-     * @return string 
+     * @return string
      */
     public function getFirstname()
     {
@@ -215,7 +217,7 @@ class User implements UserInterface
     /**
      * Get mail
      *
-     * @return string 
+     * @return string
      */
     public function getMail()
     {
@@ -234,30 +236,30 @@ class User implements UserInterface
      */
     public function getSalt()
     {
-    
+
     }
- 
+
     /**
      * Erases the user credentials.
      */
     public function eraseCredentials()
     {
- 
+
     }
- 
+
     /**
      * Gets an array of roles.
-     * 
+     *
      * @return array An array of Role objects
      */
     public function getRoles()
     {
         return $this->getUserRole()->toArray();
     }
- 
+
     /**
      * Compares this user to another to determine if they are the same.
-     * 
+     *
      * @param UserInterface $user The user
      * @return boolean True if equal, false othwerwise.
      */
@@ -300,5 +302,25 @@ class User implements UserInterface
     public function __toString()
     {
         return $this->name;
+    }
+
+    /**
+     * @see \Serializable::serialize()
+     */
+    public function serialize()
+    {
+        return serialize(array(
+            $this->id,
+        ));
+    }
+
+    /**
+     * @see \Serializable::unserialize()
+     */
+    public function unserialize($serialized)
+    {
+        list (
+            $this->id,
+        ) = unserialize($serialized);
     }
 }
