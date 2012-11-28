@@ -84,6 +84,12 @@ class WSRestController extends Controller
             //var_dump($this->container->get('router'));die();
             $user_dir = './bundles/ujmexo/users_documents/'.$this->container->get('security.context')->getToken()->getUser()->getUsername();
             //echo $user_dir;die();
+            
+            if (!is_dir('./bundles/ujmexo/users_documents/'))
+            {
+                mkdir('./bundles/ujmexo/users_documents/');
+            }
+            
             if (!is_dir($user_dir))
             {
                 $dirs = array('audio','images','media','video');
@@ -112,7 +118,7 @@ class WSRestController extends Controller
                  $em->flush();
             }
 
-            header('Location: '.$_SERVER["HTTP_REFERER"]);
+            return $this->redirect($_SERVER["HTTP_REFERER"]);
         }
         else
         {

@@ -4,7 +4,8 @@
  * and open the template in the editor.
  */
 
-session_start();var_dump($_SESSION);die();
+session_save_path('../../../../../../../app/cache/dev/sessions');
+session_start();
 
 $base_url = strpos($_SERVER['PHP_SELF'], 'bundles/stfalcontinymce');
 $base_url = $_SERVER['SERVER_NAME'].substr($_SERVER['PHP_SELF'], 0, $base_url);
@@ -16,7 +17,7 @@ if ((isset($_SERVER['HTTPS'])) && ($_SERVER['HTTPS'] == "on"))
 
 $link_post= $protocol.'://'.$base_url.'app_dev.php/document/add';
 
-$user = $_SESSION['_symfony2']['attributes']['ext_username'];
+$user = $_SESSION['_sf2_attributes']['ext_username'];
 $user_dir = '../../../../../ujmexo/users_documents/'.$user;
 
 $link = $protocol.'://'.$base_url.'bundles/ujmexo/users_documents/'.$user.'/images/';
