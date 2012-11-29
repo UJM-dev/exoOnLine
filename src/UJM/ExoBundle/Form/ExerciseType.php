@@ -61,14 +61,32 @@ class ExerciseType extends AbstractType
                                                                                                           '3' => 'From',
                                                                                                           '4' => 'Never'
             )))
-            ->add('dateCorrection', 'date', array('label' => 'Correction date'))
+            ->add('dateCorrection', 'datetime', array(
+                                                'widget' => 'single_text',
+                                                'input' => 'datetime',
+                                                'format' => 'dd/MM/yyyy HH:mm',
+                                                'attr' => array('class' => 'date'),
+                                                'label' => 'Correction date'
+                                                ))
             ->add('markMode', 'choice', array('label' => 'Availability of score', 'choices' => array(
                                                                                                '1' => 'At the same time that the correction',
                                                                                                '2' => 'At the end of assessment'
             )))
-            ->add('start_date', 'datetime', array('label' => 'Start date'))
+            ->add('start_date', 'datetime', array(
+                                                'widget' => 'single_text',
+                                                'input' => 'datetime',
+                                                'format' => 'dd/MM/yyyy HH:mm',
+                                                'attr' => array('class' => 'date'),
+                                                'label' => 'Start date'
+                                                ))
             ->add('useDateEnd', 'checkbox', array('required' => false, 'label' => 'Use date of end'))
-            ->add('end_date', 'datetime', array('label' => 'End date'))
+            ->add('end_date', 'datetime', array(
+                                                'widget' => 'single_text',
+                                                'input' => 'datetime',
+                                                'format' => 'dd/MM/yyyy HH:mm',
+                                                'attr' => array('class' => 'date'),
+                                                'label' => 'end_date'
+                                                ))
             ->add('dispButtonInterrupt', 'checkbox', array('required' => false, 'label' => 'Test exit'))
             ->add('lockAttempt', 'checkbox', array('required' => false, 'label' => 'Lock attempt'))
             //->add('groupes')

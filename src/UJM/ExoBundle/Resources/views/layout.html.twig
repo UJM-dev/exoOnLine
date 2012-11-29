@@ -43,15 +43,14 @@
 
         {% block stylesheets %}
             <link rel="stylesheet" href="{{ asset('bundles/ujmexo/css/main.css') }}" type="text/css" media="all" />
-            <link href="{{ asset('bundles/ujmexo/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
+            <link href="{{ asset('bundles/ujmexo/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css"/>
         {% endblock %}
 
         {% block javascripts %}
-            {#<script src="http://code.jquery.com/jquery-1.6.2.min.js"></script>#}
-            <script src="{{ asset('bundles/ujmexo/js/jquery.js') }}"></script>
+            {#<script src="{{ asset('bundles/ujmexo/js/jquery.js') }}"></script>#}
+            <script src="{{ asset('bundles/ujmexo/js/jquery-ui-1.9.2.custom/js/jquery-1.8.3.js') }}"></script>
             <script src="{{ asset('bundles/ujmexo/bootstrap/js/bootstrap.min.js') }}"></script>
         {% endblock %}
-
 
 
     </head>

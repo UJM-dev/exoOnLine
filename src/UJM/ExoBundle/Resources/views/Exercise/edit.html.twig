@@ -64,3 +64,17 @@
 </ul>
 
 {% endblock %}
+
+{% block stylesheets %}
+{{ parent() }}
+<link rel="stylesheet" href="{{ asset('bundles/ujmexo/js/jquery-ui-1.9.2.custom/development-bundle/themes/smoothness/minified/jquery-ui.min.css') }}"/>
+<link rel="stylesheet" href="{{ asset('bundles/ujmexo/js/jquery-ui-1.9.2.custom/development-bundle/themes/jquery-ui-timepicker-addon.css') }}"/>
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+<script src="{{ asset('bundles/ujmexo/js/jquery-ui-1.9.2.custom/development-bundle/ui/minified/jquery-ui.custom.min.js') }}"></script>
+<script src="{{ asset('bundles/ujmexo/js/jquery-ui-1.9.2.custom/development-bundle/ui/jquery-ui-timepicker-addon.js') }}"></script>
+<script src="{{ asset('bundles/ujmexo/js/jquery-ui-1.9.2.custom/development-bundle/ui/jquery-ui-sliderAccess.js') }}"></script>
+<script src="{{ asset('bundles/ujmexo/js/dateTimePicker.js') }}"></script>
+{% endblock %}
