@@ -74,7 +74,8 @@ class InteractionQCMController extends Controller
 
         $entity = $em->getRepository('UJMExoBundle:InteractionQCM')->find($id);
 
-        if (!$entity) {
+        if (!$entity)
+        {
             throw $this->createNotFoundException('Unable to find InteractionQCM entity.');
         }
 
@@ -115,7 +116,7 @@ class InteractionQCMController extends Controller
 
         $formHandler = new InteractionQCMHandler($form, $this->get('request'), $this->getDoctrine()->getEntityManager(), $this->container->get('security.context')->getToken()->getUser(), $exoID);
 
-        if( $formHandler->process() )
+        if( $formHandler->processAdd() )
         {
             //return $this->redirect($this->generateUrl('question_show', array('id' => $interQCM->getInteraction()->getQuestion()->getId(), 'paper' => 0)) );
             if($exoID == -1)
@@ -145,7 +146,8 @@ class InteractionQCMController extends Controller
 
         $entity = $em->getRepository('UJMExoBundle:InteractionQCM')->find($id);
 
-        if (!$entity) {
+        if (!$entity)
+        {
             throw $this->createNotFoundException('Unable to find InteractionQCM entity.');
         }
 
@@ -166,100 +168,23 @@ class InteractionQCMController extends Controller
     public function updateAction($id)
     {      
         $em = $this->getDoctrine()->getEntityManager();
-        $originalChoices = array();
-        $originalHints = array();
 
         $interQCM = $em->getRepository('UJMExoBundle:InteractionQCM')->find($id);
 
-        if (!$interQCM) {
+        if (!$interQCM)
+        {
             throw $this->createNotFoundException('Unable to find InteractionQCM entity.');
         }
 
-        // Create an array of the current Choice objects in the database
-        foreach ($interQCM->getChoices() as $choice)
-        {
-            $originalChoices[] = $choice;
-        }
-        foreach ($interQCM->getInteraction()->getHints() as $hint)
-        {
-            $originalHints[] = $hint;
-        }
-        
-        
         $editForm   = $this->createForm(new InteractionQCMType($this->container->get('security.context')->getToken()->getUser()), $interQCM);
-        $deleteForm = $this->createDeleteForm($id);
-
-        $request = $this->getRequest();
-
-        $editForm->bindRequest($request);
-
-        if ($editForm->isValid())
-        {                      
-            
-            // filter $originalChoices to contain choice no longer present
-            foreach ($interQCM->getChoices() as $choice) {
-                foreach ($originalChoices as $key => $toDel) {
-                    if ($toDel->getId() === $choice->getId()) {
-                        unset($originalChoices[$key]);
-                    }
-                }
-            }
-
-            // remove the relationship between the choice and the interactionqcm
-            foreach ($originalChoices as $choice)
-            {
-                // remove the choice from the interactionqcm
-                $interQCM->getChoices()->removeElement($choice);
-
-                // if you wanted to delete the Choice entirely, you can also do that
-                $em->remove($choice);
-            }
-            
-       
-             // filter $originalHints to contain hint no longer present
-            foreach($interQCM->getInteraction()->getHints() as $hint) {
-                foreach ($originalHints as $key => $toDel) {
-                    if ($toDel->getId() === $hint->getId()) {
-                        unset($originalHints[$key]);
-                    }
-                }
-            }
-
-            // remove the relationship between the hint and the interactionqcm
-            foreach ($originalHints as $hint)
-            {
-                // remove the Hint from the interactionqcm
-                $interQCM->getInteraction()->getHints()->removeElement($hint);
-
-                // if you wanted to delete the Hint entirely, you can also do that
-                $em->remove($hint);
-            }            
-       
-            
-            $em->persist($interQCM);
-            $em->persist($interQCM->getInteraction()->getQuestion());
-            $em->persist($interQCM->getInteraction());
-            
-            // On persiste tous les choices de l'interaction QCM.
-            foreach($interQCM->getChoices() as $choice)
-            {
-                $interQCM->addChoice($choice);
-                $em->persist($choice);
-            }
-
-            //On persite tous les hints de l'entité interaction
-            foreach($interQCM->getInteraction()->getHints() as $hint)
-            {
-                $interQCM->getInteraction()->addHint($hint);
-                $em->persist($hint);
-            }
-            
-            $em->flush();
-
-            //return $this->redirect($this->generateUrl('interactionqcm_edit', array('id' => $id)));
+        $formHandler = new InteractionQCMHandler($editForm, $this->get('request'), $this->getDoctrine()->getEntityManager(), $this->container->get('security.context')->getToken()->getUser());
+               
+        if( $formHandler->processUpdate($interQCM) )
+        {
             return $this->redirect($this->generateUrl('question'));
         }
-
+        
+        $deleteForm = $this->createDeleteForm($id);
         return $this->render('UJMExoBundle:InteractionQCM:edit.html.twig', array(
                 'entity'      => $interQCM,
                 'edit_form'   => $editForm->createView(),
@@ -278,7 +203,8 @@ class InteractionQCMController extends Controller
 
         $form->bindRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isValid())
+        {
             $em = $this->getDoctrine()->getEntityManager();
             $entity = $em->getRepository('UJMExoBundle:InteractionQCM')->find($id);
 

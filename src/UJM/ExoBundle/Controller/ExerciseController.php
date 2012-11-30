@@ -152,7 +152,7 @@ class ExerciseController extends Controller
         $exercise  = new Exercise();
         $form    = $this->createForm(new ExerciseType(), $exercise);
 
-        $formHandler = new ExerciseHandler($form, $this->get('request'), $this->getDoctrine()->getEntityManager(), $this->container->get('security.context')->getToken()->getUser());
+        $formHandler = new ExerciseHandler($form, $this->get('request'), $this->getDoctrine()->getEntityManager(), $this->container->get('security.context')->getToken()->getUser(), 'add');
 
         if( $formHandler->process() )
         {
@@ -215,22 +215,15 @@ class ExerciseController extends Controller
         }
 
         $editForm   = $this->createForm(new ExerciseType(), $entity);
-        $deleteForm = $this->createDeleteForm($id);
 
-        $request = $this->getRequest();
+        $formHandler = new ExerciseHandler($editForm, $this->get('request'), $this->getDoctrine()->getEntityManager(), $this->container->get('security.context')->getToken()->getUser(), 'update');
 
-        $editForm->bindRequest($request);
-
-        if ($editForm->isValid()) {
-            $em->persist($entity);
-            $em->flush();
-
-            //return $this->redirect($this->generateUrl('exercise_edit', array('id' => $id)));
-            // on retourne vers la liste des exercices
+        if( $formHandler->process() )
+        {
             return $this->redirect($this->generateUrl('exercise'));
-            
         }
 
+        $deleteForm = $this->createDeleteForm($id);
         return $this->render('UJMExoBundle:Exercise:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),

@@ -51,13 +51,15 @@ class ExerciseHandler
     protected $request;
     protected $em;
     protected $user;
+    protected $action;
 
-    public function __construct(Form $form, Request $request, EntityManager $em, User $user)
+    public function __construct(Form $form, Request $request, EntityManager $em, User $user, $action)
     {
         $this->form    = $form;
         $this->request = $request;
         $this->em      = $em;
         $this->user    = $user;
+        $this->action  = $action;
     }
 
     public function process()
@@ -77,7 +79,7 @@ class ExerciseHandler
         return false;
     }
 
-    public function onSuccess(Exercise $exercise)
+    private function onSuccess(Exercise $exercise)
     {
         // \ pour instancier un objet du namespace global et non pas de l'actuel
         $exercise->setDateCreate(new \Datetime());
@@ -85,13 +87,16 @@ class ExerciseHandler
         $this->em->persist($exercise);
         $this->em->flush();
         
-        $subscription = new Subscription($this->user, $exercise);
-        $subscription->setAdmin(1);
-        $subscription->setCreator(1);
+        if($this->action == 'add')
+        {
+            $subscription = new Subscription($this->user, $exercise);
+            $subscription->setAdmin(1);
+            $subscription->setCreator(1);
 
-        $this->em->persist($subscription);
+            $this->em->persist($subscription);
 
-        $this->em->flush();
+            $this->em->flush();
+        }
 
     }
 }
