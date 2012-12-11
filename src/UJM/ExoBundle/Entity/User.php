@@ -39,6 +39,7 @@ namespace UJM\ExoBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\EquatableInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bridge\Doctrine\Validator\Constraints as DoctrineAssert;
 
@@ -49,7 +50,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints as DoctrineAssert;
  * @ORM\Entity(repositoryClass="UJM\ExoBundle\Entity\UserRepository")
  * @DoctrineAssert\UniqueEntity("username")
  */
-class User implements UserInterface, \Serializable
+class User implements UserInterface, EquatableInterface
 {
     /**
      * @var integer $id
@@ -258,18 +259,6 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * Compares this user to another to determine if they are the same.
-     *
-     * @param UserInterface $user The user
-     * @return boolean True if equal, false othwerwise.
-     */
-    public function equals(UserInterface $user)
-    {
-        return md5($this->getUsername()) == md5($user->getUsername());
-    }
-
-
-    /**
      * Add userRole
      *
      * @param UJM\ExoBundle\Entity\Role $userRole
@@ -298,6 +287,19 @@ class User implements UserInterface, \Serializable
     {
         return $this->groupes;
     }
+    
+    /**
+    * Compares this user to another to determine if they are the same.
+    *
+    * @param UserInterface $user The user
+    * @return boolean True if equal, false othwerwise.
+    */
+    public function isEqualTo(UserInterface $user)
+    {
+        return md5($this->getUsername()) == md5($user->getUsername());
+    }
+
+
 
     public function __toString()
     {
@@ -311,6 +313,7 @@ class User implements UserInterface, \Serializable
     {
         return serialize(array(
             $this->id,
+            $this->username,
         ));
     }
 
@@ -321,6 +324,7 @@ class User implements UserInterface, \Serializable
     {
         list (
             $this->id,
+            $this->username,
         ) = unserialize($serialized);
     }
 }
