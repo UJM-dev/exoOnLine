@@ -168,7 +168,7 @@ class WSRestController extends Controller
 
         $formHandler = new InteractionQCMHandler($form, $this->get('request'), $this->getDoctrine()->getEntityManager(), $this->container->get('security.context')->getToken()->getUser(), $exoID);
 
-        if( $formHandler->process() )
+        if( $formHandler->processAdd() )
         {
             return $this->redirect($this->get('request')->get('link'));
         }
