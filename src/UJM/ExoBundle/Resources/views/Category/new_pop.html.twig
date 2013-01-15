@@ -49,7 +49,7 @@
         var nom_cat = $("#ujm_exobundle_categorytype_value").val();
 
         var exists = false;
-        $('#ujm_exobundle_interactionqcmtype_interaction_question_category option').each(function(){
+        $("*[id$='_interaction_question_category option']").each(function(){
             if (this.text == nom_cat) {
                 exists = true;
                 return false;
@@ -72,7 +72,7 @@
                     cache: false,
                     success: function(data){
                     	// ne rien faire
-                        $('#ujm_exobundle_interactionqcmtype_interaction_question_category')
+                        $("*[id$='_interaction_question_category']")
                             .append($('<option selected="selected" value="'+data+'"></option>')
                             .text(nom_cat));
 

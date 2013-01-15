@@ -1,3 +1,20 @@
+function link_category(category_new_pop){
+    //deplacer bouton créer une nouvelle catégorie
+    $("*[id$='_interaction_question']").contents("div:nth-child(2)").append($('#lien_category'));
+
+    $('#lien_category').click(function() {
+        $.ajax({
+            type: "POST",                   
+            url: category_new_pop,
+            cache: false,                   
+            success: function(data){                       
+                category_pop(data);                            
+            }                   
+        });                     
+
+    });
+}
+
 function category_pop(data){
 
                             $('#overlayEffect_cat').css({
