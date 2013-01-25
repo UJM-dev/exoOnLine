@@ -63,17 +63,4 @@ class ChoiceRepository extends EntityRepository
             return $qb->getQuery()->getResult();
     }
 
-    /**
-     * choices for an QCM interaction
-     *
-     */
-    public function getChoice($interactionId)
-    {
-            $qb = $this->createQueryBuilder('c');
-
-            $qb ->join('c.interactionQCM', 'iqcm')
-                ->where($qb->expr()->in('iqcm.id', $interactionId));
-
-            return $qb->getQuery()->getResult();
-    }
 }

@@ -87,53 +87,50 @@ class exerciseServices
            }
         }
 
-        $allChoices = $this->doctrine
-                           ->getEntityManager()
-                           ->getRepository('UJMExoBundle:choice')
-                           ->getChoice($interQCM->getId());
+        $allChoices = $interQCM->getChoices();
 
-         $penalty = 0;
+        $penalty = 0;
 
-         $session = $request->getSession();
+        $session = $request->getSession();
 
-         if($paperID == 0)
-         {
-             if ($session->get('penalties'))
-             {
-                foreach($session->get('penalties') as $penal)
-                {
-                    $penalty += $penal;
-                }
-             }
-             $session->remove('penalties');
-         }
-         else
-         {
+        if($paperID == 0)
+        {
+            if ($session->get('penalties'))
+            {
+               foreach($session->get('penalties') as $penal)
+               {
+                   $penalty += $penal;
+               }
+            }
+            $session->remove('penalties');
+        }
+        else
+        {
              //on controle l'entité linkhintpaper
              /*$hintsViewed = $this->doctrine
                                  ->getEntityManager()
                                  ->getRepository('UJMExoBundle:LinkHintPaper')
                                  ->getHintViewed($paperID);*/
-             $penalty = $this->getPenalty($interQCM->getInteraction()->getId(), $paperID);
+            $penalty = $this->getPenalty($interQCM->getInteraction(), $paperID);
 
-         }
+        }
          
-         $score = $this->qcmMark($interQCM, $response, $allChoices, $penalty);
+        $score = $this->qcmMark($interQCM, $response, $allChoices, $penalty);
 
-         $responseID = '';
-         foreach ($response as $res)
-         {
+        $responseID = '';
+        foreach ($response as $res)
+        {
             $responseID .= $res.';';
-         }
+        }
 
-         $res = array(
-             'score'    => $score,
-             'penalty'  => $penalty,
-             'interQCM' => $interQCM,
-             'response' => $responseID
-         );
+        $res = array(
+            'score'    => $score,
+            'penalty'  => $penalty,
+            'interQCM' => $interQCM,
+            'response' => $responseID
+        );
 
-         return $res;
+        return $res;
 
     }
 
@@ -221,15 +218,13 @@ class exerciseServices
         return count($papers);
     }
 
-    private function getPenalty($interactionID, $paperID)
+    private function getPenalty($interaction, $paperID)
     {
         $penalty = 0;
         $em = $this->doctrine->getEntityManager();
 
-        $hints = $this->doctrine
-                      ->getEntityManager()
-                      ->getRepository('UJMExoBundle:Hint')
-                      ->getHintInteraction($interactionID);
+        $hints = $interaction->getHints();
+        
         foreach($hints as $hint)
         {
             $lhp = $this->doctrine

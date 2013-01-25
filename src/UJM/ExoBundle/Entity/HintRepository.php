@@ -48,17 +48,4 @@ use Doctrine\ORM\EntityRepository;
 class HintRepository extends EntityRepository
 {
 
-    /**
-     * Provides the Interaction's Hint
-     *
-     */
-    public function getHintInteraction($interactionID)
-    {
-        $qb = $this->createQueryBuilder('h');
-
-        $qb ->join('h.interaction', 'i')
-            ->where($qb->expr()->in('i.id', $interactionID));
-
-        return $qb->getQuery()->getResult();
-    }
 }
