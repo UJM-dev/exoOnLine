@@ -55,7 +55,12 @@ class InteractionHoleType extends AbstractType
     {
         $builder
             ->add('interaction', new InteractionType($this->user))
-            ->add('html')
+            ->add('html','textarea', array('attr' => array('class' => 'tinymce', 'data-theme' => 'medium'), 'label' => 'Inter_Hole.html'))
+            ->add('holes', 'collection', array('type'      => new HoleType,
+                                               'prototype' => true,
+                                               //'by_reference' => false,
+                                               'allow_add' => true,
+                                               'allow_delete' => true));
             //->add('interaction')
         ;
     }

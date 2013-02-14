@@ -175,7 +175,10 @@ Inter_QCM.ScoreRightResponse: Points pour la bonne réponse
 Inter_QCM.ScoreFalseResponse: Points pour une mauvaise réponse
 Inter_QCM.weightChoice: Attribuer les points par réponse
 
+Inter_Hole.html: Texte à trous
 Inter_Hole.orthography: Autoriser les fautes d'orthographe
+Inter_Hole.score: Point
+Inter_Hole.size: Taille
 
 Coords.shape: Forme
 Coords.color: Couleur
@@ -191,9 +194,10 @@ Choice.positionForce: Forcer cette position
 
 TypeOpenQuestion.value: Type de la question
 
-Hole.size: Taille du blanc
-Hole.score: Point pour une bonne réponse
 Hole.orthography: Autoriser les fautes d'orthographe
+Hole.score: Point pour une bonne réponse
+Hole.selector: Proposer une liste
+Hole.size: Taille du blanc
 
 WordResponse.response_value: Mot
 WordResponse.score: Poitnt attribués à cette réponse

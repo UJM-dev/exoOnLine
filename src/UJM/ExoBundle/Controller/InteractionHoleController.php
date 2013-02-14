@@ -41,6 +41,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use UJM\ExoBundle\Entity\InteractionHole;
 use UJM\ExoBundle\Form\InteractionHoleType;
+use UJM\ExoBundle\Form\InteractionHoleHandler;
 
 /**
  * InteractionHole controller.
@@ -107,23 +108,30 @@ class InteractionHoleController extends Controller
      */
     public function createAction()
     {
-        $entity  = new InteractionHole();
-        $request = $this->getRequest();
-        $form    = $this->createForm(new InteractionHoleType(), $entity);
-        $form->bindRequest($request);
+        $interHole  = new InteractionHole();
+        $form    = $this->createForm(new InteractionHoleType($this->container->get('security.context')->getToken()->getUser()), $interHole);
 
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getEntityManager();
-            $em->persist($entity);
-            $em->flush();
+        $exoID = $this->container->get('request')->request->get('exercise');
+        
+        $formHandler = new InteractionHoleHandler($form, $this->get('request'), $this->getDoctrine()->getEntityManager(), $this->container->get('security.context')->getToken()->getUser(), $exoID);
 
-            return $this->redirect($this->generateUrl('interactionhole_show', array('id' => $entity->getId())));
-            
+        if( $formHandler->processAdd() )
+        {
+            //return $this->redirect($this->generateUrl('question_show', array('id' => $interQCM->getInteraction()->getQuestion()->getId(), 'paper' => 0)) );
+            if($exoID == -1)
+            {
+                return $this->redirect($this->generateUrl('question'));
+            }
+            else
+            {
+                return $this->redirect($this->generateUrl('exercise_questions', array('id' => $exoID)));
+            }
         }
-
+        
         return $this->render('UJMExoBundle:InteractionHole:new.html.twig', array(
-            'entity' => $entity,
-            'form'   => $form->createView()
+            'entity' => $interHole,
+            'form'   => $form->createView(),
+            'exoID'  => $exoID
         ));
     }
 
@@ -141,7 +149,7 @@ class InteractionHoleController extends Controller
             throw $this->createNotFoundException('Unable to find InteractionHole entity.');
         }
 
-        $editForm = $this->createForm(new InteractionHoleType(), $entity);
+        $editForm = $this->createForm(new InteractionHoleType($this->container->get('security.context')->getToken()->getUser()), $entity);
         $deleteForm = $this->createDeleteForm($id);
 
         return $this->render('UJMExoBundle:InteractionHole:edit.html.twig', array(
@@ -159,31 +167,27 @@ class InteractionHoleController extends Controller
     {
         $em = $this->getDoctrine()->getEntityManager();
 
-        $entity = $em->getRepository('UJMExoBundle:InteractionHole')->find($id);
+        $interHole = $em->getRepository('UJMExoBundle:InteractionHole')->find($id);
 
-        if (!$entity) {
+        if (!$interHole) {
             throw $this->createNotFoundException('Unable to find InteractionHole entity.');
         }
 
-        $editForm   = $this->createForm(new InteractionHoleType(), $entity);
-        $deleteForm = $this->createDeleteForm($id);
-
-        $request = $this->getRequest();
-
-        $editForm->bindRequest($request);
-
-        if ($editForm->isValid()) {
-            $em->persist($entity);
-            $em->flush();
-
-            return $this->redirect($this->generateUrl('interactionhole_edit', array('id' => $id)));
+        $editForm   = $this->createForm(new InteractionHoleType($this->container->get('security.context')->getToken()->getUser()), $interHole);
+        $formHandler = new InteractionHoleHandler($editForm, $this->get('request'), $this->getDoctrine()->getEntityManager(), $this->container->get('security.context')->getToken()->getUser());
+              
+        if( $formHandler->processUpdate($interHole) )
+        {
+            return $this->redirect($this->generateUrl('question'));
         }
-
+        
+        $deleteForm = $this->createDeleteForm($id);
         return $this->render('UJMExoBundle:InteractionHole:edit.html.twig', array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        ));
+                'entity'      => $interHole,
+                'edit_form'   => $editForm->createView(),
+                'delete_form' => $deleteForm->createView(),
+               ));
+
     }
 
     /**
@@ -209,7 +213,7 @@ class InteractionHoleController extends Controller
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('interactionhole'));
+        return $this->redirect($this->generateUrl('question'));
     }
 
     private function createDeleteForm($id)

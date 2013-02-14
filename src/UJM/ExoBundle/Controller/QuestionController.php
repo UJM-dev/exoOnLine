@@ -248,9 +248,9 @@ class QuestionController extends Controller
                 case "InteractionQCM":
 
                     $interactionQCM = $this->getDoctrine()
-                                   ->getEntityManager()
-                                   ->getRepository('UJMExoBundle:InteractionQCM')
-                                   ->getInteractionQCM($interaction[0]->getId());
+                                           ->getEntityManager()
+                                           ->getRepository('UJMExoBundle:InteractionQCM')
+                                           ->getInteractionQCM($interaction[0]->getId());
                     //apel fonction qui trie
                     $interactionQCM[0]->sortChoices();
 
@@ -270,6 +270,20 @@ class QuestionController extends Controller
                     break;
 
                 case "InteractionHole":
+                    $interactionHole = $this->getDoctrine()
+                                            ->getEntityManager()
+                                            ->getRepository('UJMExoBundle:InteractionHole')
+                                            ->getInteractionHole($interaction[0]->getId());
+                    
+                    $editForm = $this->createForm(new InteractionHoleType($this->container->get('security.context')->getToken()->getUser()), $interactionHole[0]);
+                    $deleteForm = $this->createDeleteForm($interactionHole[0]->getId());
+                    
+                    return $this->render('UJMExoBundle:InteractionHole:edit.html.twig', array(
+                        'entity'      => $interactionHole[0],
+                        'edit_form'   => $editForm->createView(),
+                        'delete_form' => $deleteForm->createView(),
+                        'nbResponses' => $nbResponses
+                    ));
 
                     break;
 
@@ -367,7 +381,12 @@ class QuestionController extends Controller
                     break;
 
                 case "InteractionHole":
-
+                    $interactionHole = $this->getDoctrine()
+                                           ->getEntityManager()
+                                           ->getRepository('UJMExoBundle:InteractionHole')
+                                           ->getInteractionHole($interaction[0]->getId());
+                    return $this->forward('UJMExoBundle:InteractionHole:delete', array('id' => $interactionHole[0]->getId()));
+                    
                     break;
 
                 case "InteractionOpen":

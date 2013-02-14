@@ -64,10 +64,22 @@ class InteractionHole
     private $html;
 
     /**
-     * @ORM\OneToOne(targetEntity="UJM\ExoBundle\Entity\Interaction")
+     * @ORM\OneToOne(targetEntity="UJM\ExoBundle\Entity\Interaction", cascade={"remove"})
      */
     private $interaction;
     
+    /**
+     * @ORM\OneToMany(targetEntity="UJM\ExoBundle\Entity\Hole", mappedBy="interactionHole", cascade={"remove"})
+     */
+    private $holes;
+    
+    /**
+     * Constructs a new instance of choices
+     */
+    public function __construct()
+    {
+        $this->holes = new \Doctrine\Common\Collections\ArrayCollection;
+    }
 
     /**
      * Get id
@@ -107,6 +119,26 @@ class InteractionHole
     public function setInteraction(\UJM\ExoBundle\Entity\Interaction $interaction)
     {
         $this->interaction = $interaction;
+    }
+    
+    public function getHoles()
+    {
+        return $this->holes;
+    }
+
+    public function addHole(\UJM\ExoBundle\Entity\Hole $hole)
+    {
+        $this->holes[] = $hole;
+        //le trou est bien lié à l'entité interactionHole, mais dans l'entité hole il faut aussi lié l'interactionhole
+        //double travail avec les relations bidirectionnelles avec lesquelles il faut bien faire attention à garder les données cohérentes
+        //dans un autre script il faudra exécuter $interactionHole->addHole() qui garde la cohérence entre les deux entités,
+        //il ne faudra pas exécuter $hole->setInteractionHole(), car lui ne garde pas la cohérence
+        $hole->setInteractionHole($this);
+    }
+
+    public function removeHole(\UJM\ExoBundle\Entity\Hole $Hole)
+    {
+        
     }
     
 }

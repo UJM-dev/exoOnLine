@@ -1,0 +1,30 @@
+hole:
+    pattern:  /
+    defaults: { _controller: "UJMExoBundle:Hole:index" }
+
+hole_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "UJMExoBundle:Hole:show" }
+
+hole_new:
+    pattern:  /new
+    defaults: { _controller: "UJMExoBundle:Hole:new" }
+
+hole_create:
+    pattern:  /create
+    defaults: { _controller: "UJMExoBundle:Hole:create" }
+    requirements: { _method: post }
+
+hole_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "UJMExoBundle:Hole:edit" }
+
+hole_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "UJMExoBundle:Hole:update" }
+    requirements: { _method: post }
+
+hole_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "UJMExoBundle:Hole:delete" }
+    requirements: { _method: post }

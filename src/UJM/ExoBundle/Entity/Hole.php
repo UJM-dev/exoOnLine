@@ -64,13 +64,6 @@ class Hole
     private $size;
 
     /**
-     * @var float $score
-     *
-     * @ORM\Column(name="score", type="float")
-     */
-    private $score;
-
-    /**
      * @var integer $position
      *
      * @ORM\Column(name="position", type="integer")
@@ -83,11 +76,31 @@ class Hole
      * @ORM\Column(name="orthography", type="boolean")
      */
     private $orthography;
+    
+    /**
+     * @var boolean $selector
+     *
+     * @ORM\Column(name="selector", type="boolean")
+     */
+    private $selector;
 
     /**
-     * @ORM\ManyToOne(targetEntity="UJM\ExoBundle\Entity\InteractionHole")
+     * @ORM\ManyToOne(targetEntity="UJM\ExoBundle\Entity\InteractionHole", inversedBy="holes")
      */
     private $interactionHole;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="UJM\ExoBundle\Entity\WordResponse", mappedBy="hole", cascade={"remove"})
+     */
+    private $wordResponses;
+    
+     /**
+     * Constructs a new instance of choices
+     */
+    public function __construct()
+    {
+        $this->wordResponses = new \Doctrine\Common\Collections\ArrayCollection;
+    }
     
 
     /**
@@ -118,26 +131,6 @@ class Hole
     public function getSize()
     {
         return $this->size;
-    }
-
-    /**
-     * Set score
-     *
-     * @param integer $score
-     */
-    public function setScore($score)
-    {
-        $this->score = $score;
-    }
-
-    /**
-     * Get score
-     *
-     * @return float
-     */
-    public function getScore()
-    {
-        return $this->score;
     }
 
     /**
@@ -179,6 +172,26 @@ class Hole
     {
         return $this->orthography;
     }
+    
+    /**
+     * Set selector
+     *
+     * @param integer $selector
+     */
+    public function setSelector($selector)
+    {
+        $this->selector = $selector;
+    }
+
+    /**
+     * Get selector
+     *
+     * @return boolean
+     */
+    public function getSelector()
+    {
+        return $this->selector;
+    }
 
     public function getInteractionHole()
     {
@@ -189,4 +202,21 @@ class Hole
     {
         $this->interactionHole = $interactionHole;
     }    
+    
+    public function getWordResponses()
+    {
+        return $this->wordResponses;
+    }
+
+    public function addWordResponse(\UJM\ExoBundle\Entity\WordResponse $wordResponse)
+    {
+        $this->wordResponses[] = $wordResponse;
+
+        $wordResponse->setHole($this);
+    }
+
+    public function removeWordResponse(\UJM\ExoBundle\Entity\WordResponse $wordResponse)
+    {
+        
+    }
 }

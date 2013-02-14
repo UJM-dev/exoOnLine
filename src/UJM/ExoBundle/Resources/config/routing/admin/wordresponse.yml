@@ -1,0 +1,30 @@
+wordresponse:
+    pattern:  /
+    defaults: { _controller: "UJMExoBundle:WordResponse:index" }
+
+wordresponse_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "UJMExoBundle:WordResponse:show" }
+
+wordresponse_new:
+    pattern:  /new
+    defaults: { _controller: "UJMExoBundle:WordResponse:new" }
+
+wordresponse_create:
+    pattern:  /create
+    defaults: { _controller: "UJMExoBundle:WordResponse:create" }
+    requirements: { _method: post }
+
+wordresponse_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "UJMExoBundle:WordResponse:edit" }
+
+wordresponse_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "UJMExoBundle:WordResponse:update" }
+    requirements: { _method: post }
+
+wordresponse_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "UJMExoBundle:WordResponse:delete" }
+    requirements: { _method: post }

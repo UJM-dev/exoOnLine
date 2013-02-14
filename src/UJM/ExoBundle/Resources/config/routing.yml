@@ -53,6 +53,10 @@ admin_Hint:
     resource: "routing/admin/hint.yml"
     prefix:   /admin/hint
 
+#admin_Hole:
+#    resource: "routing/admin/holee.yml"
+#    prefix:   /admin/hole
+
 #admin_Interaction:
 #    resource: "routing/admin/interaction.yml"
 #    prefix:   /admin/interaction

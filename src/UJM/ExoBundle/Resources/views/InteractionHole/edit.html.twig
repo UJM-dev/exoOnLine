@@ -33,6 +33,16 @@
  # knowledge of the CeCILL license and that you accept its terms.
 #}
 
+{% extends 'UJMExoBundle::layout.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block title %} {{ "Edit a question" | trans }} {% endblock %}
+
+{% block content %}
+
 <h1>InteractionHole edit</h1>
 
 <form action="{{ path('interactionhole_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
@@ -44,8 +54,36 @@
 
 <ul class="record_actions">
     <li>
-        <a href="{{ path('interactionhole') }}">
-            Back to the list
+        <a href="{{ path('question') }}">
+            {{ "Back to the list" | trans }}
         </a>
     </li>
 </ul>
+
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+
+{# tiny MCE #}
+{{ tinymce_init() }}
+
+<script type="text/javascript" src="{{ asset('bundles/ujmexo/js/interactionHole.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/ujmexo/js/category_pop.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/ujmexo/js/hint.js') }}"></script>
+
+{# add form choice #}
+<script type="text/javascript">
+$(document).ready(function() {
+    link_category('{{ path('category_new_pop') }}');
+    insert_style();
+    add_form_hole_edit('{{ "add" | trans }}', '{{ "Response" | trans }}', '{{ "point" | trans }}', '{{ "Inter_Hole.size" | trans }}', '{{ "Inter_Hole.orthography" | trans }}', '{{ "Hole.selector" | trans }}', '{{ asset('bundles/ujmexo/images/ajouter_ligne.jpeg') }}', '{{ nbResponses }}');
+    hole_css_edit('{{ "add" | trans }}', '{{ asset('bundles/ujmexo/images/ajouter_ligne.jpeg') }}', {{ nbResponses }});		
+    hint_css_edit();
+    add_form_hint_edit('{{ "add hint" | trans }}',  '{{ asset('bundles/ujmexo/images/ajouter_ligne.jpeg') }}');    
+
+});
+</script>
+
+
+{% endblock %}

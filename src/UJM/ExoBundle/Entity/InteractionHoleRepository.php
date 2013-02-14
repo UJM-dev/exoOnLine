@@ -47,4 +47,19 @@ use Doctrine\ORM\EntityRepository;
  */
 class InteractionHoleRepository extends EntityRepository
 {
+    
+    /**
+     * InteractionHole by Interaction
+     *
+     */
+    public function getInteractionHole($interactionId)
+    {
+            $qb = $this->createQueryBuilder('ihole');
+
+            $qb ->join('ihole.interaction', 'i')
+                ->where($qb->expr()->in('i.id', $interactionId));
+
+            return $qb->getQuery()->getResult();
+    }
+    
 }

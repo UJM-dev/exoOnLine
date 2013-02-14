@@ -175,7 +175,10 @@ Inter_QCM.ScoreRightResponse: Points for correct answer
 Inter_QCM.ScoreFalseResponse: Points for wrong answer
 Inter_QCM.weightChoice: Assign points by response
 
+Inter_Hole.html: Cloze
 Inter_Hole.orthography: Allow misspellings
+Inter_Hole.score: Score
+Inter_Hole.size: Size
 
 Coords.shape: Shape
 Coords.color: Color
@@ -191,9 +194,10 @@ Choice.positionForce: Forced position
 
 TypeOpenQuestion.value: Question type
 
-Hole.size: Size of hole
-Hole.score: Point for correct response
 Hole.orthography: Allow misspellings
+Hole.score: Point for correct response
+Hole.selector: Submit a list
+Hole.size: Size of hole
 
 WordResponse.response_value: Word
 WordResponse.score: Point to this response
