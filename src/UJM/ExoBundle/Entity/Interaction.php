@@ -97,12 +97,12 @@ class Interaction
     private $documents;
 
     /**
-     * @ORM\ManyToOne(targetEntity="UJM\ExoBundle\Entity\Question", cascade={"remove"})
+     * @ORM\ManyToOne(targetEntity="UJM\ExoBundle\Entity\Question", cascade={"remove", "persist"})
      */
     private $question;
 
     /**
-     * @ORM\OneToMany(targetEntity="UJM\ExoBundle\Entity\Hint", mappedBy="interaction", cascade={"remove"})
+     * @ORM\OneToMany(targetEntity="UJM\ExoBundle\Entity\Hint", mappedBy="interaction", cascade={"remove", "persist"})
      */
     private $hints;
     

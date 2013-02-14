@@ -43,7 +43,6 @@ use UJM\ExoBundle\Entity\User;
 
 class InteractionGraphicType extends AbstractType
 {
-
     private $user;
 
     public function __construct(User $user)
@@ -55,10 +54,12 @@ class InteractionGraphicType extends AbstractType
     {
         $builder
             ->add('interaction', new InteractionType($this->user))
-            ->add('width')
-            ->add('height')
+            ->add('width', 'integer')
+            ->add('height', 'integer')
+                
+            ->add('coords', new CoordsType())
+            ->add('document', new DocumentType())
             //->add('interaction')
-            //->add('document')
         ;
     }
 

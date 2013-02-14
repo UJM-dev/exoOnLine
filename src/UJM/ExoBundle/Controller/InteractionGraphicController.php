@@ -107,26 +107,35 @@ class InteractionGraphicController extends Controller
      */
     public function createAction()
     {
-        $entity  = new InteractionGraphic();
+        $user=$this->container->get('security.context')->getToken()->getUser();
+        
+        $interGraph  = new InteractionGraphic();
         $request = $this->getRequest();
-        $form    = $this->createForm(new InteractionGraphicType(), $entity);
+        $form    = $this->createForm(new InteractionGraphicType($user), $interGraph);
         $form->bindRequest($request);
 
+        $interGraph->getInteraction()->getQuestion()->setDateCreate(new \Datetime());
+        $interGraph->getInteraction()->getQuestion()->setUser($user);
+        $interGraph->getInteraction()->setType('InteractionGraphic');
+        
+        
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getEntityManager();
-            $em->persist($entity);
+            $em->persist($interGraph);
+            $em->persist($interGraph->getInteraction()->getQuestion());
+            $em->persist($interGraph->getInteraction());
             $em->flush();
 
-            return $this->redirect($this->generateUrl('interactiongraphic_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('question'));
             
         }
 
         return $this->render('UJMExoBundle:InteractionGraphic:new.html.twig', array(
-            'entity' => $entity,
+            'interGraph' => $interGraph,
             'form'   => $form->createView()
         ));
     }
-
+ 
     /**
      * Displays a form to edit an existing InteractionGraphic entity.
      *

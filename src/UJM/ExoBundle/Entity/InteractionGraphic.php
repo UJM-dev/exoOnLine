@@ -71,14 +71,19 @@ class InteractionGraphic
     private $height;
     
      /**
-     * @ORM\OneToOne(targetEntity="UJM\ExoBundle\Entity\Interaction")
+     * @ORM\OneToOne(targetEntity="UJM\ExoBundle\Entity\Interaction", cascade={"persist"})
      */
     private $interaction;   
 
     /**
-     * @ORM\ManyToOne(targetEntity="UJM\ExoBundle\Entity\Document")
+     * @ORM\ManyToOne(targetEntity="UJM\ExoBundle\Entity\Document", cascade={"persist"})
      */
     private $document;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="UJM\ExoBundle\Entity\Coords", cascade={"persist"})
+     */
+    private $coords;
     
 
     /**
@@ -149,5 +154,15 @@ class InteractionGraphic
     public function setDocument(\UJM\ExoBundle\Entity\Document $document)
     {
         $this->document = $document;
+    }    
+    
+    public function getCoords()
+    {
+        return $this->coords;
+    }
+
+    public function setCoords(\UJM\ExoBundle\Entity\Coords $coords)
+    {
+        $this->coords = $coords;
     }    
 }

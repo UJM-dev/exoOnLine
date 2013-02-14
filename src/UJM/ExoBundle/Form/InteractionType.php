@@ -56,7 +56,7 @@ class InteractionType extends AbstractType
         $builder
             ->add('question', new QuestionType($this->user))
             //->add('type', 'text')
-            ->add('invite', 'textarea', array('attr' => array('class' => 'tinymce', 'data-theme' => 'medium'), 'required' => false, 'label' => 'Interaction.invite'))
+            ->add('invite', 'textarea', array('attr' => array('class' => 'tinymce', 'data-theme' => 'medium'), 'label' => 'Interaction.invite'))
             ->add('ordre', 'hidden', array('required' => false))
             ->add('feedBack', 'textarea', array('attr' => array('class' => 'tinymce', 'data-theme' => 'medium'), 'required' => false, 'label' => 'Interaction.feedback'))
             //->add('locked_expertise', 'checkbox', array('required' => false))
