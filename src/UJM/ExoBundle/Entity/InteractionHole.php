@@ -62,6 +62,13 @@ class InteractionHole
      * @ORM\Column(name="html", type="text")
      */
     private $html;
+    
+    /**
+     * @var text $htmlWhithoutValue
+     *
+     * @ORM\Column(name="htmlWhithoutValue", type="text")
+     */
+    private $htmlWhithoutValue;
 
     /**
      * @ORM\OneToOne(targetEntity="UJM\ExoBundle\Entity\Interaction", cascade={"remove"})
@@ -109,6 +116,26 @@ class InteractionHole
     public function getHtml()
     {
         return $this->html;
+    }
+    
+    /**
+     * Set htmlWhithoutValue
+     *
+     * @param text $htmlWhithoutValue
+     */
+    public function setHtmlWhithoutValue($html)
+    {
+        $this->htmlWhithoutValue = $html;
+    }
+
+    /**
+     * Get htmlWhithoutValue
+     *
+     * @return text 
+     */
+    public function getHtmlWhithoutValue()
+    {
+        return $this->htmlWhithoutValue;
     }
     
     public function getInteraction()

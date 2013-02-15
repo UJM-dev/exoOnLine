@@ -86,6 +86,17 @@ class InteractionHoleHandler
         $interHole->getInteraction()->getQuestion()->setUser($this->user);
         $interHole->getInteraction()->setType('InteractionHole');
 
+        $html = $interHole->getHtml();
+        $tabInput = explode('value="', $html);
+
+        for( $i= 1; $i < count($tabInput); $i++)
+        {
+            $input = explode('"', $tabInput[$i]);
+            $regExpr = 'value="'.$input[0].'"';
+            $html = str_replace($regExpr, 'value=""', $html);
+        }
+        
+        $interHole->setHtmlWhithoutValue($html);
         $this->em->persist($interHole);
         $this->em->persist($interHole->getInteraction()->getQuestion());
         $this->em->persist($interHole->getInteraction());
@@ -208,7 +219,17 @@ class InteractionHoleHandler
             $this->em->remove($hint);
         }            
        
-            
+        $html = $interHole->getHtml();
+        $tabInput = explode('value="', $html);
+
+        for( $i= 1; $i < count($tabInput); $i++)
+        {
+            $input = explode('"', $tabInput[$i]);
+            $regExpr = 'value="'.$input[0].'"';
+            $html = str_replace($regExpr, 'value=""', $html);
+        }
+        
+        $interHole->setHtmlWhithoutValue($html);
         $this->em->persist($interHole);
         $this->em->persist($interHole->getInteraction()->getQuestion());
         $this->em->persist($interHole->getInteraction());

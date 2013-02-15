@@ -151,12 +151,29 @@ class InteractionHoleController extends Controller
 
         $editForm = $this->createForm(new InteractionHoleType($this->container->get('security.context')->getToken()->getUser()), $entity);
         $deleteForm = $this->createDeleteForm($id);
+        
+        /*$holes = $entity->getHoles();
+        $tabHoles = array();
+        foreach($holes as $hole)
+        {
+            $tabHoles[$hole->getPosition] = $hole->getId();
+        }
+        ksort($tabHoles);
+        $values = array();
+        foreach($tabHoles as $holeID)
+        {
+            $wordResponse = $this->getDoctrine()
+                                  ->getEntityManager()
+                                  ->getRepository('UJMExoBundle:WordResponse')
+                                  ->getGoodWordHole($holeID);
+            $values[] = $wordResponse;
+        }
 
         return $this->render('UJMExoBundle:InteractionHole:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
-        ));
+        ));*/
     }
 
     /**

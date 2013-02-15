@@ -55,3 +55,8 @@ interactionhole_delete:
     pattern:  /{id}/delete
     defaults: { _controller: "UJMExoBundle:InteractionHole:delete" }
     requirements: { _method: post }
+    
+interactionhole_response:
+    pattern: /testHole
+    defaults: { _controller: "UJMExoBundle:InteractionHole:response_hole" }
+    requirements: { _method: post }

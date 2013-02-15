@@ -156,6 +156,16 @@ class QuestionController extends Controller
                     break;
 
                 case "InteractionHole":
+                    
+                    $response = new Response();
+                    $interactionHole = $this->getDoctrine()
+                                   ->getEntityManager()
+                                   ->getRepository('UJMExoBundle:InteractionHole')
+                                   ->getInteractionHole($interaction[0]->getId());
+
+                    $form   = $this->createForm(new ResponseType(), $response);
+
+                    return $this->render('UJMExoBundle:InteractionHole:paper.html.twig', array('interactionHole' => $interactionHole[0], 'form'   => $form->createView()));
 
                     break;
 
