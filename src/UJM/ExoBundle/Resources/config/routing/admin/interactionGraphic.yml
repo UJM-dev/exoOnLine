@@ -55,3 +55,16 @@ interactiongraphic_delete:
     pattern:  /{id}/delete
     defaults: { _controller: "UJMExoBundle:InteractionGraphic:delete" }
     requirements: { _method: post }
+    
+interactiongraphic_AjoutImg:
+    pattern:  /AjoutImg
+    defaults: { _controller: "UJMExoBundle:WSRest:postDocumentAdd" }
+    requirements: { _method: post }
+    
+interactiongraphic_savepic:
+    pattern:  /SavePic
+    defaults: { _controller: "UJMExoBundle:InteractionGraphic:SavePic" }
+    
+interactiongraphic_DisplayPic:
+    pattern:  /DisplayPic
+    defaults: { _controller: "UJMExoBundle:InteractionGraphic:DisplayPic" }
