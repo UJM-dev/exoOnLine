@@ -38,11 +38,9 @@
 namespace UJM\ExoBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Response;
 
 use UJM\ExoBundle\Entity\InteractionGraphic;
 use UJM\ExoBundle\Form\InteractionGraphicType;
-//use UJM\ExoBundle\Entity\Document;
 
 /**
  * InteractionGraphic controller.
@@ -109,27 +107,17 @@ class InteractionGraphicController extends Controller
      */
     public function createAction()
     {
-        
-        //width+height = hauteur+largeur de l'image apres redimmensionnement
-        //coords = coordonnées de la zone de reponse
-        
-        
         $user=$this->container->get('security.context')->getToken()->getUser();
-       
+        
         $interGraph  = new InteractionGraphic();
         $request = $this->getRequest();
         $form    = $this->createForm(new InteractionGraphicType($user), $interGraph);
         $form->bindRequest($request);
 
-        $interGraph->getInteraction()->getQuestion()->setDateCreate(new \Datetime()); // Set Creation Date to today
-        $interGraph->getInteraction()->getQuestion()->setUser($user); // add the user to the question
-        $interGraph->getInteraction()->setType('InteractionGraphic'); // set the type of the question
-         
-        //$height=$this->get('request')->get('height');
-        //$width=$this->get('request')->get('width');
+        $interGraph->getInteraction()->getQuestion()->setDateCreate(new \Datetime());
+        $interGraph->getInteraction()->getQuestion()->setUser($user);
+        $interGraph->getInteraction()->setType('InteractionGraphic');
         
-        //$interGraph->setHeight($height);
-        //$interGraph->setWidth($width);
         
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getEntityManager();
@@ -137,7 +125,7 @@ class InteractionGraphicController extends Controller
             $em->persist($interGraph->getInteraction()->getQuestion());
             $em->persist($interGraph->getInteraction());
             $em->flush();
-            
+
             return $this->redirect($this->generateUrl('question'));
             
         }
@@ -239,41 +227,5 @@ class InteractionGraphicController extends Controller
             ->add('id', 'hidden')
             ->getForm()
         ;
-    }
-    
-     /**
-     * Display the twig view to add a new picture to the user document.
-     *
-     */
-    public function SavePicAction(){
-        return $this->render('UJMExoBundle:InteractionGraphic:page.html.twig');
-    }
-    
-    /**
-     * Get the adress of the selected picture in order to display it.
-     *
-     */
-    public function DisplayPicAction(){
-                 
-        $request = $this->container->get('request');
-
-        if($request->isXmlHttpRequest()){
-            $label = $request->request->get('value');
-            if($label){ // If the sended label isn't empty, get the matching adress
-             $repository = $this->getDoctrine()
-                           ->getManager()
-                           ->getRepository('UJMExoBundle:Document');
-
-            $pic = $repository->findOneBy(array('label' => $label));
-            $sufix = substr ($pic->getUrl() , 2);
-            }else{
-                $sufix=""; // Else don't display anything
-            }
-        }
-        
-        $prefix="//exoOnLine/web/";
-        $url=$prefix.$sufix;
-       
-        return new Response($url);
     }
 }

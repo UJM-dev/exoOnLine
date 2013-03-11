@@ -52,30 +52,14 @@ class InteractionGraphicType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $id = $this->user->getId();
-        
         $builder
             ->add('interaction', new InteractionType($this->user))
-            //->add('width', 'integer')
-            //->add('height', 'integer')
-            //->add('coords', new CoordsType())
-            //->add('document', new DocumentType())
-                           
-            //->add('image', 'file')
-            ->add('document', 'entity', array(
-                  'class' => 'UJMExoBundle:Document',
-                  'property' => 'label',
+            ->add('width', 'integer')
+            ->add('height', 'integer')
                 
-                  // Request to get the pictures matching to the user_id
-                  'query_builder' => function (\UJM\ExoBundle\Entity\DocumentRepository $repository) use ($id)
-                     {
-                         return $repository->createQueryBuilder('d')
-                                ->where('d.user = ?1')
-                                ->setParameter(1, $id);
-                     },
-                //'empty_value' => 'Choose a picture', ou dynamique avec javascript comme ajout new choice ?
-));
-
+            ->add('coords', new CoordsType())
+            ->add('document', new DocumentType())
+            //->add('interaction')
         ;
     }
 

@@ -12,8 +12,8 @@ class DocumentType extends AbstractType
     {
         $builder
             ->add('label', 'text')
-            //->add('url', 'text')
-            //->add('type', 'text')
+            ->add('url', 'text')
+            ->add('type', 'text')
 
             //->add('user', new UserType())
         ;
