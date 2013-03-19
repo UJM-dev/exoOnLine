@@ -150,14 +150,4 @@ class InteractionGraphic
     {
         $this->document = $document;
     }    
-    
-   /* public function getCoords()
-    {
-        return $this->coords;
-    }
-
-    public function setCoords(\UJM\ExoBundle\Entity\Coords $coords)
-    {
-        $this->coords = $coords;
-    }    */
 }
