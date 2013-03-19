@@ -83,7 +83,6 @@ class Document
     private $user;
     
     
-
     /**
      * Get id
      *

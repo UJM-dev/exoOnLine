@@ -38,11 +38,11 @@
 {% endblock %}
 
 <form class="well label_bold" id="uploadForm" enctype="multipart/form-data" action="{{ path('interactiongraphic_AjoutImg') }}" method="post" onsubmit="return ChangeList()">
-    <label for="label">Picture name :</label>
+    <label for="label">{{ "Picture name" | trans }}</label>
     <input type="text" id='label' name='label' required="true"/><br/>
     <input id="picture" name="picture" type="file" required="true"/>
     <br /><br />
-    <input id="uploadSubmit" type="submit" value="Upload !"/><p id="Result">Uploading ...</p>
+    <input id="uploadSubmit" type="submit" value="{{ "Upload !" | trans }}"/><p id="Result">{{ "Uploading ..." | trans }}</p>
 </form>
 
 <script type="text/javascript">

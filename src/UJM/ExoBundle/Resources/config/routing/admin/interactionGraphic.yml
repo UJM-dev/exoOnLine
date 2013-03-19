@@ -61,7 +61,7 @@ interactiongraphic_AjoutImg:
     defaults: { _controller: "UJMExoBundle:WSRest:postDocumentAdd" }
     requirements: { _method: post }
     
-interactiongraphic_savepic:
+interactiongraphic_SavePic:
     pattern:  /SavePic
     defaults: { _controller: "UJMExoBundle:InteractionGraphic:SavePic" }
     

@@ -80,7 +80,7 @@ class WSRestController extends Controller
         //le login permet de lier le doc à un utilisateur mais aussi de vérifier que le login correspond bien à l'utilisateur connecté.
 
         if ($this->get('security.context')->isGranted('ROLE_ADMIN'))
-        {
+        {   
             //var_dump($this->container->get('router'));die();
             $user_dir = './bundles/ujmexo/users_documents/'.$this->container->get('security.context')->getToken()->getUser()->getUsername();
             //echo $user_dir;die();
@@ -101,7 +101,7 @@ class WSRestController extends Controller
             }
 
             if((isset($_FILES['picture'])) && ($_FILES['picture'] != ''))
-            {
+            {               
                  $file = basename($_FILES['picture']['name']);
                  move_uploaded_file($_FILES['picture']['tmp_name'], $user_dir.'/images/'. $file);
 

@@ -80,12 +80,7 @@ class InteractionGraphic
      */
     private $document;
     
-    /**
-     * @ORM\ManyToOne(targetEntity="UJM\ExoBundle\Entity\Coords", cascade={"persist"})
-     */
-    private $coords;
     
-
     /**
      * Get id
      *
@@ -156,7 +151,7 @@ class InteractionGraphic
         $this->document = $document;
     }    
     
-    public function getCoords()
+   /* public function getCoords()
     {
         return $this->coords;
     }
@@ -164,5 +159,5 @@ class InteractionGraphic
     public function setCoords(\UJM\ExoBundle\Entity\Coords $coords)
     {
         $this->coords = $coords;
-    }    
+    }    */
 }

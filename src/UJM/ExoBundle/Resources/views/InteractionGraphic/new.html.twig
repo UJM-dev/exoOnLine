@@ -37,51 +37,105 @@
 
 <form class="well label_bold" name="InterGraphForm" id="InterGraphForm" action="{{ path('interactiongraphic_create') }}" method="post" {{ form_enctype(form) }}>
 
-    <p>
-        {{ form_label(form.interaction.question.title, "Question title :") }}
-        {{ form_widget(form.interaction.question.title) }} 
-    </p><p>        
-        {{ form_label(form.interaction.question.category, "Category :") }}
-        {{ form_widget(form.interaction.question.category) }}
+{# ------------------------------------------------- Champs questions ---------------------------------------------------------------------------- #}  
+    <p> 
+        {{ form_row(form.interaction.question.title) }} 
+    </p><p>              
+        {{ form_row(form.interaction.question.category) }}
 
         {# link to category #}
         <a href="#" style="margin: 5px 5px 5px 5px;" id="lien_category">{{ "Create a new category" | trans }}</a> 
 
-    </p><p>        
-        {{ form_label(form.interaction.question.description, "Description (optional) :") }}
-        {{ form_widget(form.interaction.question.description) }}
-    </p><p>        
-        {{ form_label(form.interaction.question.model, "Set as model") }}
-        {{ form_widget(form.interaction.question.model) }}
+    </p><p>            
+        {{ form_row(form.interaction.question.description) }}
     </p><p>                
-        {{ form_label(form.interaction.invite, "Question :") }}
-        {{ form_widget(form.interaction.invite) }}
-    </p><p>         
-        {{ form_label(form.interaction.feedBack, "Feedback to display whith the correction (optional) :") }}
-        {{ form_widget(form.interaction.feedBack) }}
-    </p><p>        
-        {{ form_label(form.interaction.hints, "Hints :") }}
-        {{ form_widget(form.interaction.hints) }}         
-    </p><p>        
-        {{ form_label(form.document, "Img dispo :") }}
-        {{ form_widget(form.document) }}   
- 
-    &nbsp; &nbsp;
-    <a href="{{ path('interactiongraphic_savepic') }}" onclick="window.open(this.href, 'NewPic', 
+        {{ form_row(form.interaction.question.model) }}
+    </p><p>                       
+        {{ form_row(form.interaction.invite) }}
+    </p><p>                
+        {{ form_row(form.interaction.feedBack) }}
+    </p><p>              
+        {{ form_row(form.interaction.hints) }}         
+    </p>
+    
+{# ------------------------------------------------- Champs Liste images ---------------------------------------------------------------------------- #}    
+    
+    <p>        
+        {{ form_row(form.document) }}   
+
+{# ------------------------------------------------- Lien nouvelle image ---------------------------------------------------------------------------- #}            
+   
+    <a href="{{ path('interactiongraphic_SavePic') }}" onclick="window.open(this.href, 'NewPic', 
         'height=167, width=287, top=300, left=570, toolbar=no, menubar=no, location=no, resizable=yes, scrollbars=no, status=no'
-        ); return false;">Add a new picture ...</a>
+        ); return false;">{{ "Add a new picture ..." | trans }}</a>
     </p>  
  
-    <p><input id="LoadImg" type="button" value="Télécharger" onclick="LoadPic()"/></p>
+{# ------------------------------------------------- Boutton affichage image ---------------------------------------------------------------------------- #}
+    
+    <p><input id="LoadImg" type="button" value="{{ "Select" | trans }}" onclick="LoadPic()"/></p>
+ 
+{# ------------------------------------------------- Zone affichage image ---------------------------------------------------------------------------- #}    
+    
+    <p>{{ "Redimmension" | trans }}</p>
     
     <canvas id="canvas" width="0" height="0">
-      <p>Désolé, votre navigateur ne supporte pas Canvas. Mettez-vous à jour</p>
+      <p>{{ "unsupport" | trans }}</p>
     </canvas>
 
+    <input type="hidden" id="imgwidth" name="imgwidth" value="0"/>
+    <input type="hidden" id="imgheight" name="imgheight" value="0"/>
+    <input type="hidden" id="coordsZone" name="coordsZone" value="0"/>
+    
+    <p id="rep">{{ "Selection" | trans }}<br/>{{ "Effacer" | trans }}</p>
+
+{# ------------------------------------------------- tableau zone de reponse ---------------------------------------------------------------------------- #}    
+    
+    <table>
+        <tr>
+            <th>{{ "Zone de réponse" | trans }}</th>
+            <th>{{ "Forme" | trans }}</th>
+            <th>{{ "Couleur" | trans }}</th>
+            <th>{{ "Points" | trans }}</th>
+        </tr>
+
+        <tr>
+            <td>
+                <img src="{{ asset('bundles/ujmexo/images/graphic/circlew.png') }}" id="movable" style="margin-left: 50px"/>
+            </td>
+
+            <td>
+                <select id="shape" name="shape" size="1" style="width:100px" onchange="changezone()">
+                        <option value="circle"  selected>{{ "cercle" | trans }}</option>
+                        <option value="rect" >{{ "rectangle" | trans }}</option>
+                </select>
+            </td>
+
+            <td>
+                <select id="color" name="color" size="1" style="width:70px" onchange="changezone()">
+                        <option value="white"  style="background-color:#FFFFFF;"selected>&nbsp;&nbsp;&nbsp;</option>
+                        <option value="red"    style="background-color:#FF0000;">&nbsp;&nbsp;&nbsp;</option>
+                        <option value="blue"   style="background-color:#002FFF;">&nbsp;&nbsp;&nbsp;</option> 
+                        <option value="purple" style="background-color:#8B008B;">&nbsp;&nbsp;&nbsp;</option>
+                        <option value="green"  style="background-color:#008600;">&nbsp;&nbsp;&nbsp;</option>
+                        <option value="orange"   style="background-color:#FF7A00;">&nbsp;&nbsp;&nbsp;</option>
+                        <option value="yellow"   style="background-color:#FFFF09;">&nbsp;&nbsp;&nbsp;</option>
+                </select>
+            </td>
+
+            <td>
+                <input type="TEXT" id="points" name="points" value="1" style="width:20px" maxlength="2">
+            </td>
+        </tr>
+    </table>    
+ 
+{# ------------------------------------------------- Boutton validation formulaire ---------------------------------------------------------------------------- #}    
+    
     <p><br/>
-        <button type="submit">Create</button>
+        <button type="submit" onclick="Verifier()">{{ "Create" | trans }}</button>
     </p>
 </form>
+
+{# ------------------------------------------------- Div category ---------------------------------------------------------------------------- #}
 
 <div id="listeCategory">
     <div id="popupCategory" class="hidden"> <a id="closeCategory" class="hidden" title="close popup">{{ "close" | trans }}</a><h1>{{ "Create a new category" | trans }}</h1><div id="div_input_category"></div></div><div id="overlayEffect_cat"> </div>
@@ -89,39 +143,13 @@
  
 <script type="text/javascript" src="{{ asset('bundles/ujmexo/js/hint.js') }}"></script>
 <script type="text/javascript" src="{{ asset('bundles/ujmexo/js/category_pop.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/ujmexo/js/graphic.js') }}"></script>
+
+{# ------------------------------------------------- Javascript ---------------------------------------------------------------------------- #}
 
 <script type="text/javascript">
     add_form_hint('{{ "add hint" | trans }}', '{{ "hint number" | trans }}', '{{ "Hint" | trans }}', '{{ "Penalty" | trans }}', '{{ asset('bundles/ujmexo/images/ajouter_ligne.jpeg') }}');    
     link_category('{{ path('category_new_pop') }}');
-   
-   // Function called to display the selected picture 
-   function LoadPic(){
-        
-        var list = document.InterGraphForm.ujm_exobundle_interactiongraphictype_document;
-        var select = list.options[list.selectedIndex].innerHTML; // Label of the selected picture
-
-        var canvas  = document.querySelector('#canvas');
-        var context = canvas.getContext('2d');
-
-        var pic = new Image();
-
-        // Send the label of the picture to get the adress in order to display it
-        $.ajax({
-             type: "POST",
-             url: "{{path('interactiongraphic_DisplayPic')}}",
-             data: { value: select },
-             cache: false,
-                 success: function(data){ 
-                     result = data.substr((data.indexOf('>/')+2));
-                     pic.src = result;
-                 }                   
-          });     
-
-        pic.onload = function() {
-           canvas.width = pic.width;
-           canvas.height = pic.height;
-
-           context.drawImage(pic, 0, 0);
-       }
-    }
 </script>
+
+<div id="test"></div>
