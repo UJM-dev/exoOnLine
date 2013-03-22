@@ -89,6 +89,7 @@ class Coords
      */
     private $interactiongraphic;    
 
+    
     /**
      * Get id
      *

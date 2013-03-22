@@ -54,11 +54,11 @@ class InteractionQCMRepository extends EntityRepository
      */
     public function getInteractionQCM($interactionId)
     {
-            $qb = $this->createQueryBuilder('iqcm');
+        $qb = $this->createQueryBuilder('iqcm');
 
-            $qb ->join('iqcm.interaction', 'i')
-                ->where($qb->expr()->in('i.id', $interactionId));
+        $qb->join('iqcm.interaction', 'i')
+           ->where($qb->expr()->in('i.id', $interactionId));
 
-            return $qb->getQuery()->getResult();
+        return $qb->getQuery()->getResult();
     }
 }

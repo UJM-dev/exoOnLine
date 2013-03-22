@@ -179,7 +179,6 @@ class Exercise
      * @ORM\ManyToMany(targetEntity="UJM\ExoBundle\Entity\Groupes")
      */
     private $groupes;
-    
 
         
     public function __construct()

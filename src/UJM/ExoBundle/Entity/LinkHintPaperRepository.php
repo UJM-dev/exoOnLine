@@ -71,8 +71,8 @@ class LinkHintPaperRepository extends EntityRepository
     {
         $qb = $this->createQueryBuilder('lhp');
 
-        $qb ->where($qb->expr()->in('lhp.paper', $paperID))
-            ->andWhere($qb->expr()->in('lhp.view', 1));
+        $qb->where($qb->expr()->in('lhp.paper', $paperID))
+           ->andWhere($qb->expr()->in('lhp.view', 1));
 
         return $qb->getQuery()->getResult();
     }

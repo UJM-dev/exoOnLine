@@ -106,6 +106,7 @@ class User implements UserInterface, EquatableInterface
      */
     private $groupes;
 
+    
     /**
      * Constructs a new instance of UserRole / groupes
      */
@@ -322,9 +323,6 @@ class User implements UserInterface, EquatableInterface
      */
     public function unserialize($serialized)
     {
-        list (
-            $this->id,
-            $this->username,
-        ) = unserialize($serialized);
+        list ($this->id, $this->username) = unserialize($serialized);
     }
 }

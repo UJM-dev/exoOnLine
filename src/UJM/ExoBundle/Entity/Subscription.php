@@ -75,6 +75,7 @@ class Subscription
      */
     private $admin;
 
+    
     public function __construct(\UJM\ExoBundle\Entity\User $user, \UJM\ExoBundle\Entity\Exercise $exercise)
     {
         $this->user = $user;
@@ -100,7 +101,6 @@ class Subscription
     {
         return $this->exercise;
     }
-
 
     /**
      * Set creator

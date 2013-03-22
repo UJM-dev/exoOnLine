@@ -79,53 +79,45 @@ class WSRestController extends Controller
         //on poste les données label,url, type, login
         //le login permet de lier le doc à un utilisateur mais aussi de vérifier que le login correspond bien à l'utilisateur connecté.
 
-        if ($this->get('security.context')->isGranted('ROLE_ADMIN'))
-        {   
+        if ($this->get('security.context')->isGranted('ROLE_ADMIN')) {   
             //var_dump($this->container->get('router'));die();
             $user_dir = './bundles/ujmexo/users_documents/'.$this->container->get('security.context')->getToken()->getUser()->getUsername();
             //echo $user_dir;die();
             
-            if (!is_dir('./bundles/ujmexo/users_documents/'))
-            {
+            if (!is_dir('./bundles/ujmexo/users_documents/')) {
                 mkdir('./bundles/ujmexo/users_documents/');
             }
             
-            if (!is_dir($user_dir))
-            {
+            if (!is_dir($user_dir)) {
                 $dirs = array('audio','images','media','video');
                 mkdir($user_dir);
-                foreach ($dirs as $dir)
-                {
+                
+                foreach ($dirs as $dir) {
                     mkdir($user_dir.'/'.$dir);
                 }
             }
 
-            if((isset($_FILES['picture'])) && ($_FILES['picture'] != ''))
-            {               
-                 $file = basename($_FILES['picture']['name']);
-                 move_uploaded_file($_FILES['picture']['tmp_name'], $user_dir.'/images/'. $file);
+            if ((isset($_FILES['picture'])) && ($_FILES['picture'] != '')) {               
+                $file = basename($_FILES['picture']['name']);
+                move_uploaded_file($_FILES['picture']['tmp_name'], $user_dir.'/images/'. $file);
 
-                 $em = $this->getDoctrine()->getEntityManager();
-                 $document = new Document();
+                $em = $this->getDoctrine()->getEntityManager();
+                $document = new Document();
 
-                 $document->setLabel($_POST['label']);
-                 $document->setUrl($user_dir.'/images/'. $file);
-                 $document->setType(strrchr($file, '.'));
-                 $document->setUser($this->container->get('security.context')->getToken()->getUser());
+                $document->setLabel($_POST['label']);
+                $document->setUrl($user_dir.'/images/'. $file);
+                $document->setType(strrchr($file, '.'));
+                $document->setUser($this->container->get('security.context')->getToken()->getUser());
 
-                 $em->persist($document);
+                $em->persist($document);
 
-                 $em->flush();
+                $em->flush();
             }
 
             return $this->redirect($_SERVER["HTTP_REFERER"]);
-        }
-        else
-        {
+        } else {
             return 'Not authorized';
         }
-        
-
     }
 
     /**
@@ -144,15 +136,12 @@ class WSRestController extends Controller
         $form   = $this->createForm(new InteractionQCMType($this->container->get('security.context')->getToken()->getUser()), $entity);
        
         return $this->container->get('templating')->renderResponse('UJMExoBundle:InteractionQCM:rest_new.html.twig', array(
-           'entity'     => $entity,
-           'form'       => $form->createView(),
-           'action'     => $action,
-           'link'       => $link,
-           'loadJQuery' => $loadJQuery
-        )
-        );
-
-
+                                                                   'entity'     => $entity,
+                                                                   'form'       => $form->createView(),
+                                                                   'action'     => $action,
+                                                                   'link'       => $link,
+                                                                   'loadJQuery' => $loadJQuery,
+                                                                   ));
     }
 
     /**
@@ -164,12 +153,12 @@ class WSRestController extends Controller
         //post test_ws/qcm/add
 
         $interQCM  = new InteractionQCM();
-        $form    = $this->createForm(new InteractionQCMType($this->container->get('security.context')->getToken()->getUser()), $interQCM);
+        $form = $this->createForm(new InteractionQCMType($this->container->get('security.context')->getToken()->getUser()), $interQCM);
 
-        $formHandler = new InteractionQCMHandler($form, $this->get('request'), $this->getDoctrine()->getEntityManager(), $this->container->get('security.context')->getToken()->getUser(), $exoID);
+        $formHandler = new InteractionQCMHandler($form, $this->get('request'), $this->getDoctrine()->getEntityManager(), 
+                                                 $this->container->get('security.context')->getToken()->getUser(), $exoID);
 
-        if( $formHandler->processAdd() )
-        {
+        if ($formHandler->processAdd()) {
             return $this->redirect($this->get('request')->get('link'));
         }
 
@@ -192,13 +181,13 @@ class WSRestController extends Controller
         $uid = $user->getId();
 
         $liste_subscriptions = $this->getDoctrine()
-                               ->getEntityManager()
-                               ->getRepository('UJMExoBundle:Subscription')
-                               ->getExercisesUser($uid);
+                                    ->getEntityManager()
+                                    ->getRepository('UJMExoBundle:Subscription')
+                                    ->getExercisesUser($uid);
 
         return $this->render('UJMExoBundle:Exercise:rest_index.html.twig', array(
-            'liste_subscriptions' => $liste_subscriptions)
-        );
+                             'liste_subscriptions' => $liste_subscriptions,
+                             ));
     }
 
     /**
@@ -217,21 +206,18 @@ class WSRestController extends Controller
         $uid = $user->getId();
 
         $interactions = $this->getDoctrine()
-                               ->getEntityManager()
-                               ->getRepository('UJMExoBundle:Interaction')
-                               ->getUserInteraction($uid);
+                             ->getEntityManager()
+                             ->getRepository('UJMExoBundle:Interaction')
+                             ->getUserInteraction($uid);
 
         $questionWithResponse = array();
         $em = $this->getDoctrine()->getEntityManager();
-        foreach($interactions as $interaction)
-        {
+        
+        foreach ($interactions as $interaction) {
             $response = $em->getRepository('UJMExoBundle:Response')->findBy(array('interaction' => $interaction->getId()));
-            if (count($response) > 0)
-            {
+            if (count($response) > 0) {
                 $questionWithResponse[] = 1;
-            }
-            else
-            {
+            } else {
                 $questionWithResponse[] = 0;
             }
         }
@@ -239,8 +225,8 @@ class WSRestController extends Controller
         //var_dump($questionWithResponse);
 
         return $this->render('UJMExoBundle:Question:rest_index.html.twig', array(
-            'interactions'         => $interactions,
-            'questionWithResponse' => $questionWithResponse
-        ));
+                             'interactions'         => $interactions,
+                             'questionWithResponse' => $questionWithResponse,
+                             ));
     }
 }

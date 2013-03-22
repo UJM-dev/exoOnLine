@@ -54,12 +54,12 @@ class QuestionRepository extends EntityRepository
      */
     public function getQuestionsUser($userId)
     {
-            $qb = $this->createQueryBuilder('q');
+        $qb = $this->createQueryBuilder('q');
 
-            $qb ->join('q.user', 'u')
-                ->where($qb->expr()->in('u.id', $userId));
+        $qb->join('q.user', 'u')
+           ->where($qb->expr()->in('u.id', $userId));
 
-            return $qb->getQuery()->getResult();
+        return $qb->getQuery()->getResult();
     }
 
     /**
@@ -70,9 +70,9 @@ class QuestionRepository extends EntityRepository
     {
         $qb = $this->createQueryBuilder('q');
 
-        $qb ->join('q.user', 'u')
-            ->where($qb->expr()->in('q.id', $question))
-            ->andWhere($qb->expr()->in('u.id', $user));
+        $qb->join('q.user', 'u')
+           ->where($qb->expr()->in('q.id', $question))
+           ->andWhere($qb->expr()->in('u.id', $user));
 
         return $qb->getQuery()->getResult();
     }

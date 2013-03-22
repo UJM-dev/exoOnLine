@@ -59,30 +59,26 @@ class PaperController extends Controller
 
         $subscription = $this->getSubscription($user, $exoID);
 
-        if( count($subscription) < 1 )
-        {
+        if (count($subscription) < 1) {
             return $this->redirect($this->generateUrl('exercise_show', array('id' => $exoID)));
         }
 
-        if ($subscription[0]->getAdmin() == 1)
-        {
+        if ($subscription[0]->getAdmin() == 1) {
             $papers = $this->getDoctrine()
-                              ->getEntityManager()
-                              ->getRepository('UJMExoBundle:Paper')
-                              ->getExerciseAllPapers($exoID);
-        }
-        else
-        {
+                            ->getEntityManager()
+                            ->getRepository('UJMExoBundle:Paper')
+                            ->getExerciseAllPapers($exoID);
+        } else {
             $papers = $this->getDoctrine()
-                              ->getEntityManager()
-                              ->getRepository('UJMExoBundle:Paper')
-                              ->getExerciseUserPapers($user->getId(), $exoID);
+                            ->getEntityManager()
+                            ->getRepository('UJMExoBundle:Paper')
+                            ->getExerciseUserPapers($user->getId(), $exoID);
         }
 
         return $this->render('UJMExoBundle:Paper:index.html.twig', array(
-            'papers'  => $papers,
-            'isAdmin' => $subscription[0]->getAdmin()
-        ));
+                             'papers'  => $papers,
+                             'isAdmin' => $subscription[0]->getAdmin(),
+                             ));
     }
 
     /**
@@ -97,28 +93,28 @@ class PaperController extends Controller
 
         $subscription = $this->getSubscription($user, $paper->getExercise()->getId());
 
-        if ( ($subscription[0]->getAdmin() != 1) && ($paper->getEnd() == null) )
-        {
+        if (($subscription[0]->getAdmin() != 1) && ($paper->getEnd() == null)) {
+            
             return $this->redirect($this->generateUrl('exercise_show', array('id' => $paper->getExercise()->getId())));
-        }
-        elseif( ($subscription[0]->getAdmin() == 1) || ( ($user->getId() == $paper->getUser()->getId()) && ( ($paper->getExercise()->getCorrectionMode() == 1) || ( ($paper->getExercise()->getCorrectionMode() == 3) && ($paper->getExercise()->getDateCorrection()->format('Y-m-d H:i:s') <= date("Y-m-d H:i:s") ) ) || ( ($paper->getExercise()->getCorrectionMode() == 2) && ($paper->getExercise()->getMaxAttemps() <= $this->container->get('UJM_Exo.exerciseServices')->getNbPaper($user->getId(), $paper->getExercise()->getId())) ) ) ) )
-        {
+            
+        } else if (($subscription[0]->getAdmin() == 1) || (($user->getId() == $paper->getUser()->getId()) && 
+                  (($paper->getExercise()->getCorrectionMode() == 1) || (($paper->getExercise()->getCorrectionMode() == 3) && 
+                  ($paper->getExercise()->getDateCorrection()->format('Y-m-d H:i:s') <= date("Y-m-d H:i:s"))) || (($paper->getExercise()->getCorrectionMode() == 2) &&
+                  ($paper->getExercise()->getMaxAttemps() <= $this->container->get('UJM_Exo.exerciseServices')->getNbPaper($user->getId(), $paper->getExercise()->getId())))))){
+            
             $display = 'all';
-        }
-        elseif( ($user->getId() == $paper->getUser()->getId()) && ($paper->getExercise()->getMarkMode() == 2) )
-        {
+            
+        } else if (($user->getId() == $paper->getUser()->getId()) && ($paper->getExercise()->getMarkMode() == 2)) {
             //si pas le droit à la correction mais que la note peut être affiché à la fin du test
             $display = 'score';
-        }
-        else
-        {
+        } else {
             return $this->redirect($this->generateUrl('exercise_show', array('id' => $paper->getExercise()->getId())));
         }
 
         $interactions = $this->getDoctrine()
-                                 ->getEntityManager()
-                                 ->getRepository('UJMExoBundle:Interaction')
-                                 ->getPaperInteraction($em, str_replace(';','\',\'',substr($paper->getOrdreQuestion(),0,-1)));
+                             ->getEntityManager()
+                             ->getRepository('UJMExoBundle:Interaction')
+                             ->getPaperInteraction($em, str_replace(';', '\',\'', substr($paper->getOrdreQuestion(), 0, -1)));
 
         $interactions = $this->orderInteractions($interactions, $paper->getOrdreQuestion());
 
@@ -140,9 +136,8 @@ class PaperController extends Controller
                              'responses'    => $responses,
                              'hintViewed'   => $hintViewed,
                              'correction'   => $paper->getExercise()->getCorrectionMode(),
-                             'display'      => $display
-                            ));
-
+                             'display'      => $display,
+                             ));
     }
 
     public function deleteAction($id)
@@ -170,23 +165,20 @@ class PaperController extends Controller
     private function createDeleteForm($id)
     {
         return $this->createFormBuilder(array('id' => $id))
-            ->add('id', 'hidden')
-            ->getForm()
+                    ->add('id', 'hidden')
+                    ->getForm()
         ;
     }
 
     private function orderInteractions($interactions, $order)
     {
         $inter = array();
-        $order = substr ($order,0 , strlen($order)-1 );
+        $order = substr ($order, 0, strlen($order) - 1);
         $order = explode(';', $order);
 
-        foreach($order as $interId)
-        {
-            foreach($interactions as $key => $interaction)
-            {
-                if($interaction->getId() == $interId)
-                {
+        foreach ($order as $interId) {
+            foreach ($interactions as $key => $interaction) {
+                if ($interaction->getId() == $interId) {
                     $inter[] = $interaction;
                     unset($interactions[$key]);
                     break;
@@ -199,15 +191,12 @@ class PaperController extends Controller
     private function orderResponses($responses, $order)
     {
         $resp = array();
-        $order = substr ($order,0 , strlen($order)-1 );
+        $order = substr ($order, 0, strlen($order) - 1);
         $order = explode(';', $order);
-        foreach($order as $interId)
-        {
+        foreach ($order as $interId) {
             $tem = 0;
-            foreach($responses as $key => $response)
-            {
-                if($response->getInteraction()->getId() == $interId)
-                {
+            foreach ($responses as $key => $response) {
+                if ($response->getInteraction()->getId() == $interId) {
                     $tem++;
                     $resp[] = $response;
                     unset($responses[$key]);
@@ -215,8 +204,7 @@ class PaperController extends Controller
                 }
             }
             //if no response
-            if($tem == 0)
-            {
+            if ($tem == 0) {
                 $response = new response();
                 $response->setResponse('');
                 $response->setMark(0);
@@ -236,5 +224,4 @@ class PaperController extends Controller
 
         return $subscription;
     }
-
 }

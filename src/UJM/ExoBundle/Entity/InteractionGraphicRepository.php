@@ -47,4 +47,13 @@ use Doctrine\ORM\EntityRepository;
  */
 class InteractionGraphicRepository extends EntityRepository
 {
+    public function getInteractionGraphic($interactionId)
+    {
+        $qb = $this->createQueryBuilder('igraph');
+
+        $qb->join('igraph.interaction', 'i')
+           ->where($qb->expr()->in('i.id', $interactionId));
+
+        return $qb->getQuery()->getResult();
+    }
 }

@@ -53,12 +53,11 @@ class InteractionOpenType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder
-            ->add('interaction', new InteractionType($this->user))
-            ->add('orthography_correct')
+        $builder->add('interaction', new InteractionType($this->user))
+                ->add('orthography_correct')
             //->add('interaction')
-            ->add('unit')
-            ->add('typeopenquestion')
+                ->add('unit')
+                ->add('typeopenquestion')
         ;
     }
 

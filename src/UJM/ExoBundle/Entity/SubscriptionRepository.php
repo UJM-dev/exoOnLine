@@ -55,13 +55,12 @@ class SubscriptionRepository extends EntityRepository
     public function getExercisesUser($user)
     {
         $qb = $this->createQueryBuilder('s')
-	      ->where('s.user = :user')
-              ->setParameter('user', $user)	       
-              ->join('s.exercise', 'e')
-              ->addSelect('e');
+                   ->where('s.user = :user')
+                   ->setParameter('user', $user)	       
+                   ->join('s.exercise', 'e')
+                   ->addSelect('e');
 
-        return $qb->getQuery()
-                  ->getResult();
+        return $qb->getQuery()->getResult();
     }
 
     /**
@@ -72,12 +71,11 @@ class SubscriptionRepository extends EntityRepository
     {
         $qb = $this->createQueryBuilder('s');
 
-        $qb ->join('s.exercise', 'e')
-            ->join('s.user', 'u')
-            ->where($qb->expr()->in('e.id', $exercise))
-            ->andWhere($qb->expr()->in('u.id', $user));
+        $qb->join('s.exercise', 'e')
+           ->join('s.user', 'u')
+           ->where($qb->expr()->in('e.id', $exercise))
+           ->andWhere($qb->expr()->in('u.id', $user));
 
         return $qb->getQuery()->getResult();
     }
-    
 }

@@ -68,9 +68,9 @@ class FeatureContext extends MinkContext
     private $choice2 = "ch2";
     private $choice3 = "ch3";
 
-     /**
-       * @Given /^Given I am authenticated$/
-       */
+    /**
+      * @Given /^Given I am authenticated$/
+      */
     public function givenIAmAuthenticated()
     {
         $this->page = $this->getSession()->getPage();
@@ -83,17 +83,17 @@ class FeatureContext extends MinkContext
     }
 
     /**
-       * @Given /^Given I createQuestion$/
-       */
+      * @Given /^Given I createQuestion$/
+      */
     public function givenICreateQuestion()
     {
         $link_newQ = $this->page->findLink('Create a new entry');
         $link_newQ->click();
     }
 
-     /**
-       * @Given /^Given I verifyTable$/
-       */
+    /**
+      * @Given /^Given I verifyTable$/
+      */
     public function givenIverifyTable()
     {             
         
@@ -112,13 +112,12 @@ class FeatureContext extends MinkContext
         assertTrue($this->page->hasField('ujm_exobundle_interactionqcmtype_choices_0_label'));
         assertTrue($this->page->hasField('ujm_exobundle_interactionqcmtype_choices_1_label'));
         assertTrue($this->page->hasField('ujm_exobundle_interactionqcmtype_choices_2_label'));
-                  
     }
     
         
-     /**
-       * @Given /^Given I createNewQ$/
-       */
+    /**
+      * @Given /^Given I createNewQ$/
+      */
     public function givenIcreateNewQ()
     {
         //$this->page = $this->getSession()->getPage();
@@ -132,7 +131,6 @@ class FeatureContext extends MinkContext
         $hint1 = $this->page->findField('ujm_exobundle_interactionqcmtype_interaction_hints_0_value');
         $hint1_penalite = $this->page->findField('ujm_exobundle_interactionqcmtype_interaction_hints_0_penality'); 
         $correctRep = $this->page->findField('ujm_exobundle_interactionqcmtype_choices_1_rightResponse');
-        
 
         $titleQ->setValue($this->question_title);
         $this->getMink()->getSession()->getDriver()->executeScript("$(document).ready(function(){tinyMCE.execCommand('mceFocus',false,'ujm_exobundle_interactionqcmtype_interaction_invite');}) ");
@@ -144,18 +142,16 @@ class FeatureContext extends MinkContext
         $choice1->setValue($this->choice1);
         $choice2->setValue($this->choice2);
         $choice3->setValue($this->choice3);
-
         
         $correctRep->check();       
         
         $button_submit = $this->page->findById('button_submit');
         $button_submit->click();
-        
     } 
 
-     /**
-       * @Given /^Given I passeTheQ/
-       */
+    /**
+      * @Given /^Given I passeTheQ/
+      */
     public function givenIpasseTheQ()
     {
         //$this->page = $this->getSession()->getPage();
@@ -165,9 +161,9 @@ class FeatureContext extends MinkContext
         $this->page->findField($this->choice2)->check();      
     }
     
-     /**
-       * @Given /^Given I verifyScore/
-       */
+    /**
+      * @Given /^Given I verifyScore/
+      */
     public function givenIverifyScore()
     {
         //$this->page = $this->getSession()->getPage();
@@ -175,5 +171,4 @@ class FeatureContext extends MinkContext
  
         assertEquals($this->page->findById('score')->getText(), $this->score."/".$this->score);
     } 
-   
 }

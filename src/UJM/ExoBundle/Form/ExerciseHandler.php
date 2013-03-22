@@ -64,12 +64,10 @@ class ExerciseHandler
 
     public function process()
     {
-        if( $this->request->getMethod() == 'POST' )
-        {
+        if($this->request->getMethod() == 'POST') {
             $this->form->bindRequest($this->request);
 
-            if( $this->form->isValid() )
-            {
+            if ($this->form->isValid()) {
                 $this->onSuccess($this->form->getData());
 
                 return true;
@@ -87,8 +85,7 @@ class ExerciseHandler
         $this->em->persist($exercise);
         $this->em->flush();
         
-        if($this->action == 'add')
-        {
+        if ($this->action == 'add') {
             $subscription = new Subscription($this->user, $exercise);
             $subscription->setAdmin(1);
             $subscription->setCreator(1);
@@ -97,6 +94,5 @@ class ExerciseHandler
 
             $this->em->flush();
         }
-
     }
 }

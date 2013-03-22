@@ -49,27 +49,30 @@ use UJM\ExoBundle\Entity\Coords;
  * InteractionGraphic controller.
  *
  */
-class InteractionGraphicController extends Controller {
+class InteractionGraphicController extends Controller 
+{
 
     /**
      * Lists all InteractionGraphic entities.
      *
      */
-    public function indexAction() {
+    public function indexAction() 
+    {
         $em = $this->getDoctrine()->getEntityManager();
 
         $entities = $em->getRepository('UJMExoBundle:InteractionGraphic')->findAll();
 
         return $this->render('UJMExoBundle:InteractionGraphic:index.html.twig', array(
-                    'entities' => $entities
-                ));
+                             'entities' => $entities
+                             ));
     }
 
     /**
      * Finds and displays a InteractionGraphic entity.
      *
      */
-    public function showAction($id) {
+    public function showAction($id) 
+    {
         $em = $this->getDoctrine()->getEntityManager();
 
         $entity = $em->getRepository('UJMExoBundle:InteractionGraphic')->find($id);
@@ -81,30 +84,32 @@ class InteractionGraphicController extends Controller {
         $deleteForm = $this->createDeleteForm($id);
 
         return $this->render('UJMExoBundle:InteractionGraphic:show.html.twig', array(
-                    'entity' => $entity,
-                    'delete_form' => $deleteForm->createView(),
-                ));
+                             'entity' => $entity,
+                             'delete_form' => $deleteForm->createView(),
+                             ));
     }
 
     /**
      * Displays a form to create a new InteractionGraphic entity.
      *
      */
-    public function newAction() {
+    public function newAction() 
+    {
         $entity = new InteractionGraphic();
         $form = $this->createForm(new InteractionGraphicType(), $entity);
 
         return $this->render('UJMExoBundle:InteractionGraphic:new.html.twig', array(
-                    'entity' => $entity,
-                    'form' => $form->createView()
-                ));
+                             'entity' => $entity,
+                             'form' => $form->createView()
+                             ));
     }
 
     /**
      * Creates a new InteractionGraphic entity.
      *
      */
-    public function createAction() {
+    public function createAction() 
+    {
 
         $user = $this->container->get('security.context')->getToken()->getUser();
 
@@ -145,7 +150,7 @@ class InteractionGraphicController extends Controller {
         }
 
         for ($i = 0; $i < $lengthCoord; $i++) {
-            ${'co'.$i} = new Coords ();
+            ${'co'.$i} = new Coords();
         
             ${'co'.$i}->setValue(${'value'.$i});
             ${'co'.$i}->setShape(${'shape'.$i});
@@ -171,14 +176,15 @@ class InteractionGraphicController extends Controller {
         return $this->render('UJMExoBundle:InteractionGraphic:new.html.twig', array(
                              'interGraph' => $interGraph,
                              'form' => $form->createView()
-                            ));
+                             ));
     }
 
     /**
      * Displays a form to edit an existing InteractionGraphic entity.
      *
      */
-    public function editAction($id) {
+    public function editAction($id) 
+    {
         $em = $this->getDoctrine()->getEntityManager();
 
         $entity = $em->getRepository('UJMExoBundle:InteractionGraphic')->find($id);
@@ -191,17 +197,18 @@ class InteractionGraphicController extends Controller {
         $deleteForm = $this->createDeleteForm($id);
 
         return $this->render('UJMExoBundle:InteractionGraphic:edit.html.twig', array(
-                    'entity' => $entity,
-                    'edit_form' => $editForm->createView(),
-                    'delete_form' => $deleteForm->createView(),
-                ));
+                             'entity' => $entity,
+                             'edit_form' => $editForm->createView(),
+                             'delete_form' => $deleteForm->createView(),
+                             ));
     }
 
     /**
      * Edits an existing InteractionGraphic entity.
      *
      */
-    public function updateAction($id) {
+    public function updateAction($id) 
+    {
         $em = $this->getDoctrine()->getEntityManager();
 
         $entity = $em->getRepository('UJMExoBundle:InteractionGraphic')->find($id);
@@ -225,17 +232,18 @@ class InteractionGraphicController extends Controller {
         }
 
         return $this->render('UJMExoBundle:InteractionGraphic:edit.html.twig', array(
-                    'entity' => $entity,
-                    'edit_form' => $editForm->createView(),
-                    'delete_form' => $deleteForm->createView(),
-                ));
+                             'entity' => $entity,
+                             'edit_form' => $editForm->createView(),
+                             'delete_form' => $deleteForm->createView(),
+                             ));
     }
 
     /**
      * Deletes a InteractionGraphic entity.
      *
      */
-    public function deleteAction($id) {
+    public function deleteAction($id) 
+    {
         $form = $this->createDeleteForm($id);
         $request = $this->getRequest();
 
@@ -256,10 +264,11 @@ class InteractionGraphicController extends Controller {
         return $this->redirect($this->generateUrl('interactiongraphic'));
     }
 
-    private function createDeleteForm($id) {
+    private function createDeleteForm($id) 
+    {
         return $this->createFormBuilder(array('id' => $id))
-                        ->add('id', 'hidden')
-                        ->getForm()
+                    ->add('id', 'hidden')
+                    ->getForm()
         ;
     }
 
@@ -267,7 +276,8 @@ class InteractionGraphicController extends Controller {
      * Display the twig view to add a new picture to the user document.
      *
      */
-    public function SavePicAction() {
+    public function SavePicAction() 
+    {
         return $this->render('UJMExoBundle:InteractionGraphic:page.html.twig');
     }
 
@@ -275,7 +285,8 @@ class InteractionGraphicController extends Controller {
      * Get the adress of the selected picture in order to display it.
      *
      */
-    public function DisplayPicAction() {
+    public function DisplayPicAction() 
+    {
 
         $request = $this->container->get('request');
 
@@ -303,12 +314,13 @@ class InteractionGraphicController extends Controller {
      * Get the shape of the answer zone
      *
      */   
-    public function getShape($url){
+    public function getShape($url)
+    {
         $chaine = substr($url,0,1);
      
-        if($chaine == "r"){
+        if ($chaine == "r") {
             return "rectangle";
-        }else if($chaine == "c"){
+        } else if($chaine == "c") {
             return "circle";
         }
     }
@@ -317,34 +329,35 @@ class InteractionGraphicController extends Controller {
      * Get the color of the answer zone
      *
      */ 
-    public function getColor($url){
+    public function getColor($url)
+    {
         $chaine = substr($url, -5, 1); 
         
         switch ($chaine) {
-             case "w" :
-                return "white";
-                break;
-             case "g" :
-                return "green";
-                break;
-             case "p" :
-                return "purple";
-                break;
-             case "b" :
-                return "blue";
-                break;
-             case "r" :
-                return "red";
-                break;
-             case "o" :
-                return "orange";
-                break;
-             case "y" :
-                return "yellow";
-                break;
-            default :
-                return "white";
-                break;
+        case "w" :
+           return "white";
+           break;
+        case "g" :
+           return "green";
+           break;
+        case "p" :
+           return "purple";
+           break;
+        case "b" :
+           return "blue";
+           break;
+        case "r" :
+           return "red";
+           break;
+        case "o" :
+           return "orange";
+           break;
+        case "y" :
+           return "yellow";
+           break;
+       default :
+           return "white";
+           break;
         }
     }
-} 
+}

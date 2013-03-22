@@ -54,13 +54,12 @@ class ChoiceRepository extends EntityRepository
      */
     public function getRightChoice($interactionId)
     {
-            $qb = $this->createQueryBuilder('c');
+        $qb = $this->createQueryBuilder('c');
 
-            $qb ->join('c.interactionQCM', 'iqcm')
-                ->where($qb->expr()->in('iqcm.id', $interactionId))
-                ->andWhere('c.rightResponse = 1');
+        $qb->join('c.interactionQCM', 'iqcm')
+           ->where($qb->expr()->in('iqcm.id', $interactionId))
+           ->andWhere('c.rightResponse = 1');
 
-            return $qb->getQuery()->getResult();
+        return $qb->getQuery()->getResult();
     }
-
 }

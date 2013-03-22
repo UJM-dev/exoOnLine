@@ -64,6 +64,7 @@ class Role implements RoleInterface
      */
     private $name;
 
+    
     /**
      * Get id
      *

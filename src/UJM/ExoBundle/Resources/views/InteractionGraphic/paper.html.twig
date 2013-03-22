@@ -1,0 +1,133 @@
+{#
+ # ExoOnLine
+ # Copyright or © or Copr. Université Jean Monnet (France), 2012
+ # dsi.dev@univ-st-etienne.fr
+ #
+ # This software is a computer program whose purpose is to [describe
+ # functionalities and technical features of your software].
+ #
+ # This software is governed by the CeCILL license under French law and
+ # abiding by the rules of distribution of free software.  You can  use,
+ # modify and/ or redistribute the software under the terms of the CeCILL
+ # license as circulated by CEA, CNRS and INRIA at the following URL
+ # "http://www.cecill.info".
+ #
+ # As a counterpart to the access to the source code and  rights to copy,
+ # modify and redistribute granted by the license, users are provided only
+ # with a limited warranty  and the software's author,  the holder of the
+ # economic rights,  and the successive licensors  have only  limited
+ # liability.
+ #
+ # In this respect, the user's attention is drawn to the risks associated
+ # with loading,  using,  modifying and/or developing or reproducing the
+ # software by the user in light of its specific status of free software,
+ # that may mean  that it is complicated to manipulate,  and  that  also
+ # therefore means  that it is reserved for developers  and  experienced
+ # professionals having in-depth computer knowledge. Users are therefore
+ # encouraged to load and test the software's suitability as regards their
+ # requirements in conditions enabling the security of their systems and/or
+ # data to be ensured and,  more generally, to use and operate it in the
+ # same conditions as regards security.
+ #
+ # The fact that you are presently reading this means that you have had
+ # knowledge of the CeCILL license and that you accept its terms.
+#}
+
+{% extends 'UJMExoBundle::layout.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('bundles/ujmexo/css/paper.css') }}" type="text/css" rel="stylesheet" />
+{% endblock %}
+
+{% block title %} {{ "Paper" | trans }} {{ "Question" | trans }} {% endblock %}
+
+
+
+{% block content %}
+
+<h1> Question : {{ interactionGraphic.interaction.question.title }}</h1>
+
+<div name="description">
+    <p>{{ interactionGraphic.interaction.question.description|raw }}<p/>
+</div>
+
+<h3 name="question">
+    <p>{{ interactionGraphic.interaction.invite|raw }}<p/>
+</h3>
+
+<h5>{{ "consignes" | trans }} :</h5>
+<h6 id="ref"><em>{{ "position" | trans }}<br/>{{ "selection" | trans }}<br/>{{ "raz" | trans }}</em></h6>
+
+<p>{%set i=1%}
+    {% for coords in listeCoords %} {%set place = 170+i*25%}
+        <img src="{{ asset('bundles/ujmexo/images/graphic/answer.png') }}" alt="AnswerZone{{i}}" id="cursor{{i}}" 
+             style="position: absolute; left: {{ place }}px;"/>{%set i=i+1%}
+   {% endfor %}
+</p><p>
+    <img src="{{ asset(interactionGraphic.document.url) }}" alt="AnswerImg" id="AnswerImg" 
+         width="{{ interactionGraphic.width }}" height="{{ interactionGraphic.height }}" style="margin-top: 30px"/>
+</p>
+
+<script type="text/javascript">
+    var cible; // The selected pointer
+    var drag = false; // Allow or not to move the pointer
+    var ref = document.getElementById('ref'); // The instructions div to get it position and place pointers after
+    var taille = {{ i }}; // Number of pointers + 1
+
+    document.addEventListener('click', function (e) {
+
+        for (var j = 1 ; j < taille ; j++) {
+            if (e.target.id == 'cursor'+j) {
+               cible = e.target;
+               document.body.style.cursor = 'pointer';
+            }
+        }
+    }, false);
+
+    document.addEventListener('click', function (e) {
+        if (drag == true) { 
+            cible = null;
+            drag = false;
+            document.body.style.cursor = 'default';
+        }
+    }, false);
+
+    document.addEventListener('mousemove', function (e) {
+      if (cible) {
+             // Position de la souris dans la fenetre :
+           if (e.x != undefined && e.y != undefined) { // IE
+               x = e.layerX;
+               y = e.layerY;
+           } else { // Firefox
+               x = e.clientX + document.body.scrollLeft + document.documentElement.scrollLeft;
+               y = e.clientY + document.body.scrollTop + document.documentElement.scrollTop;
+           }
+
+           // Position de la souris dans l'image :
+           //x -= canvas.offsetLeft;
+           //y -= canvas.offsetTop;
+
+           cible.style.left = String(x-10) + 'px';
+           cible.style.top = String(y-10) + 'px';
+
+          drag = true;
+      }
+    }, false);
+
+    document.addEventListener('keydown', function (e) {
+        if (e.keyCode == 67) {
+            for (var x = 1 ; x < taille ; x++) {
+                cur = 'cursor' + x;
+                document.getElementById(cur).style.left = String(170+x*25) + 'px';
+                document.getElementById(cur).style.top = String(ref.offsetTop + 70) + 'px';
+            }
+        }
+    }, false);
+</script>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('bundles/ujmexo/js/paper.js') }}"></script>
+{% endblock %}

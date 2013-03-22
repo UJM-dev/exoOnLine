@@ -67,6 +67,7 @@ class LinkHintPaper
      */
     private $view;
 
+    
     public function __construct(\UJM\ExoBundle\Entity\Hint $hint, \UJM\ExoBundle\Entity\Paper $paper)
     {
         $this->hint = $hint;

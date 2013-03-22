@@ -47,5 +47,4 @@ use Doctrine\ORM\EntityRepository;
  */
 class HintRepository extends EntityRepository
 {
-
 }

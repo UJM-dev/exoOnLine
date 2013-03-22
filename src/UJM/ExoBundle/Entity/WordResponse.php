@@ -80,6 +80,7 @@ class WordResponse
      */
     private $hole;
 
+    
     /**
      * Get id
      *

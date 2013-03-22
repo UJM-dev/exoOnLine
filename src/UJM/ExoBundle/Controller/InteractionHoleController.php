@@ -59,8 +59,8 @@ class InteractionHoleController extends Controller
         $entities = $em->getRepository('UJMExoBundle:InteractionHole')->findAll();
 
         return $this->render('UJMExoBundle:InteractionHole:index.html.twig', array(
-            'entities' => $entities
-        ));
+                             'entities' => $entities
+                             ));
     }
 
     /**
@@ -80,10 +80,9 @@ class InteractionHoleController extends Controller
         $deleteForm = $this->createDeleteForm($id);
 
         return $this->render('UJMExoBundle:InteractionHole:show.html.twig', array(
-            'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),
-
-        ));
+                             'entity'      => $entity,
+                             'delete_form' => $deleteForm->createView(),
+                             ));
     }
 
     /**
@@ -96,9 +95,9 @@ class InteractionHoleController extends Controller
         $form   = $this->createForm(new InteractionHoleType(), $entity);
 
         return $this->render('UJMExoBundle:InteractionHole:new.html.twig', array(
-            'entity' => $entity,
-            'form'   => $form->createView()
-        ));
+                             'entity' => $entity,
+                             'form'   => $form->createView(),
+                             ));
     }
 
     /**
@@ -118,13 +117,12 @@ class InteractionHoleController extends Controller
             $em->flush();
 
             return $this->redirect($this->generateUrl('interactionhole_show', array('id' => $entity->getId())));
-            
         }
 
         return $this->render('UJMExoBundle:InteractionHole:new.html.twig', array(
-            'entity' => $entity,
-            'form'   => $form->createView()
-        ));
+                             'entity' => $entity,
+                             'form'   => $form->createView(),
+                             ));
     }
 
     /**
@@ -145,10 +143,10 @@ class InteractionHoleController extends Controller
         $deleteForm = $this->createDeleteForm($id);
 
         return $this->render('UJMExoBundle:InteractionHole:edit.html.twig', array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        ));
+                             'entity'      => $entity,
+                             'edit_form'   => $editForm->createView(),
+                             'delete_form' => $deleteForm->createView(),
+                             ));
     }
 
     /**
@@ -180,10 +178,10 @@ class InteractionHoleController extends Controller
         }
 
         return $this->render('UJMExoBundle:InteractionHole:edit.html.twig', array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        ));
+                             'entity'      => $entity,
+                             'edit_form'   => $editForm->createView(),
+                             'delete_form' => $deleteForm->createView(),
+                             ));
     }
 
     /**
@@ -215,8 +213,8 @@ class InteractionHoleController extends Controller
     private function createDeleteForm($id)
     {
         return $this->createFormBuilder(array('id' => $id))
-            ->add('id', 'hidden')
-            ->getForm()
+                    ->add('id', 'hidden')
+                    ->getForm()
         ;
     }
 }

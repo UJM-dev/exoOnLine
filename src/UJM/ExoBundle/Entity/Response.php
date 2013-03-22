@@ -94,6 +94,7 @@ class Response
      */
      private $interaction;
 
+     
     /**
      * Get id
      *

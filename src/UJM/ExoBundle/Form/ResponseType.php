@@ -44,10 +44,9 @@ class ResponseType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder
-            ->add('ip', 'hidden')
-            ->add('mark', 'hidden')
-            ->add('nb_tries', 'hidden')
+        $builder->add('ip', 'hidden')
+                ->add('mark', 'hidden')
+                ->add('nb_tries', 'hidden')
             //->add('response')
             //->add('paper')
             //->add('interaction')

@@ -75,6 +75,7 @@ class LockAttempt
      */
      private $paper;
 
+     
     /**
      * Get id
      *

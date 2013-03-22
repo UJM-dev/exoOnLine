@@ -10,8 +10,7 @@ class DocumentType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder
-            ->add('label', 'text')
+        $builder->add('label', 'text')
             //->add('url', 'text')
             //->add('type', 'text')
 
@@ -21,9 +20,7 @@ class DocumentType extends AbstractType
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(array(
-            'data_class' => 'UJM\ExoBundle\Entity\Document'
-        ));
+        $resolver->setDefaults(array('data_class' => 'UJM\ExoBundle\Entity\Document'));
     }
 
     public function getName()

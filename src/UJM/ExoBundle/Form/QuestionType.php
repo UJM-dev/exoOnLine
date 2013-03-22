@@ -55,16 +55,16 @@ class QuestionType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $uid = $this->user->getId();
-        $builder
-            ->add('title', 'text', array('label' => 'Question.title') )
-            ->add('category', 'entity', array('class' => 'UJM\\ExoBundle\\Entity\\Category', 'label' => 'Category.value',
-                                              'query_builder' => function(CategoryRepository $cr) use($uid)
-                                                                 {
-                                                                    return $cr->getUserCategory($uid);
-                                                                 }
-                                             )
-                 )
-            ->add('description', 'textarea', array('attr' => array('class' => 'tinymce', 'data-theme' => 'medium'), 'required' => false, 'label' => 'Question.description'))
+        
+        $builder->add('title', 'text', array('label' => 'Question.title') )
+                ->add('category', 'entity', array('class' => 'UJM\\ExoBundle\\Entity\\Category', 'label' => 'Category.value',
+                                                  'query_builder' => function(CategoryRepository $cr) use($uid)
+                                                                     {
+                                                                        return $cr->getUserCategory($uid);
+                                                                     }
+                                                  )
+                     )
+                ->add('description', 'textarea', array('attr' => array('class' => 'tinymce', 'data-theme' => 'medium'), 'required' => false, 'label' => 'Question.description'))
             //->add('dateCreate', 'date')
             /*->add('dateCreate', 'date', array(
                                                 'widget' => 'single_text',
@@ -74,7 +74,7 @@ class QuestionType extends AbstractType
                                                 ))*/
             //->add('dateModify', 'date', array('required' => false))
             //->add('locked', 'checkbox', array('required' => false))
-            ->add('model', 'checkbox', array('required' => false, 'label' => 'Question.model'))
+                ->add('model', 'checkbox', array('required' => false, 'label' => 'Question.model'))
             //->add('expertise')
             //->add('documents')
             //->add('user', 'entity', array('class' => 'UJM\\ExoBundle\\Entity\\User',))
@@ -88,8 +88,6 @@ class QuestionType extends AbstractType
 
     public function getDefaultOptions(array $options)
     {
-        return array(
-            'data_class'      => 'UJM\ExoBundle\Entity\Question'
-        );
+        return array('data_class' => 'UJM\ExoBundle\Entity\Question'); 
     }
 }

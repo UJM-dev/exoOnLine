@@ -57,7 +57,7 @@ class LoginController extends Controller
         return $this->render('UJMExoBundle:Login:login.html.twig', array(
                              'last_username' => $this->get('request')->getSession()->get(SecurityContext::LAST_USERNAME),
                              'error'         => $error,
-                                                                        ));
+                             ));
         /*return array(
             'last_username' => $this->get('request')->getSession()->get(SecurityContext::LAST_USERNAME),
             'error'         => $error,

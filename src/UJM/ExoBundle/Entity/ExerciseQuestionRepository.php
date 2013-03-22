@@ -55,8 +55,8 @@ class ExerciseQuestionRepository extends EntityRepository
     {
         $qb = $this->createQueryBuilder('eq');
 
-        $qb ->join('eq.question', 'q')
-            ->where($qb->expr()->in('q.id', $questionId));
+        $qb->join('eq.question', 'q')
+           ->where($qb->expr()->in('q.id', $questionId));
 
         return $qb->getQuery()->getResult();
     }

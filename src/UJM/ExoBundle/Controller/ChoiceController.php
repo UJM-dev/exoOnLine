@@ -59,8 +59,8 @@ class ChoiceController extends Controller
         $entities = $em->getRepository('UJMExoBundle:Choice')->findAll();
 
         return $this->render('UJMExoBundle:Choice:index.html.twig', array(
-            'entities' => $entities
-        ));
+                             'entities' => $entities
+                             ));
     }
 
     /**
@@ -80,10 +80,9 @@ class ChoiceController extends Controller
         $deleteForm = $this->createDeleteForm($id);
 
         return $this->render('UJMExoBundle:Choice:show.html.twig', array(
-            'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),
-
-        ));
+                             'entity'      => $entity,
+                             'delete_form' => $deleteForm->createView(),
+                             ));
     }
 
     /**
@@ -96,9 +95,9 @@ class ChoiceController extends Controller
         $form   = $this->createForm(new ChoiceType(), $entity);
 
         return $this->render('UJMExoBundle:Choice:new.html.twig', array(
-            'entity' => $entity,
-            'form'   => $form->createView()
-        ));
+                             'entity' => $entity,
+                             'form'   => $form->createView(),
+                             ));
     }
 
     /**
@@ -122,9 +121,9 @@ class ChoiceController extends Controller
         }
 
         return $this->render('UJMExoBundle:Choice:new.html.twig', array(
-            'entity' => $entity,
-            'form'   => $form->createView()
-        ));
+                             'entity' => $entity,
+                             'form'   => $form->createView(),
+                             ));
     }
 
     /**
@@ -145,10 +144,10 @@ class ChoiceController extends Controller
         $deleteForm = $this->createDeleteForm($id);
 
         return $this->render('UJMExoBundle:Choice:edit.html.twig', array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        ));
+                             'entity'      => $entity,
+                             'edit_form'   => $editForm->createView(),
+                             'delete_form' => $deleteForm->createView(),
+                             ));
     }
 
     /**
@@ -180,10 +179,10 @@ class ChoiceController extends Controller
         }
 
         return $this->render('UJMExoBundle:Choice:edit.html.twig', array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        ));
+                             'entity'      => $entity,
+                             'edit_form'   => $editForm->createView(),
+                             'delete_form' => $deleteForm->createView(),
+                             ));
     }
 
     /**
@@ -215,8 +214,8 @@ class ChoiceController extends Controller
     private function createDeleteForm($id)
     {
         return $this->createFormBuilder(array('id' => $id))
-            ->add('id', 'hidden')
-            ->getForm()
+                    ->add('id', 'hidden')
+                    ->getForm()
         ;
     }
 }

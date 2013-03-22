@@ -108,5 +108,4 @@ class InteractionHole
     {
         $this->interaction = $interaction;
     }
-    
 }

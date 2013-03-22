@@ -70,7 +70,7 @@ class InteractionGraphic
      */
     private $height;
     
-     /**
+    /**
      * @ORM\OneToOne(targetEntity="UJM\ExoBundle\Entity\Interaction", cascade={"persist"})
      */
     private $interaction;   

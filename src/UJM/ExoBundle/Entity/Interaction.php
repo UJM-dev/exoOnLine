@@ -107,7 +107,7 @@ class Interaction
     private $hints;
     
 
-     /**
+    /**
      * Constructs a new instance of Documents, hints
      */
     public function __construct()
@@ -278,8 +278,7 @@ class Interaction
     
     public function setHints ($hints)
     {
-        foreach($hints as $hint)
-        {
+        foreach ($hints as $hint) {
             $this->addHint($hint);
         }
     }

@@ -44,13 +44,12 @@ class ChoiceType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder
-            ->add('label', 'textarea')//, array('attr' => array('class' => 'tinymce', 'data-theme' => 'medium'), 'label' => 'Choice.label'))
-            ->add('ordre', 'text')
-            ->add('weight', 'text', array('required' => false, 'label' => 'Choice.label'))
-            ->add('feedback', 'textarea', array('required' => false, 'label' => 'Choice.feedback'))
-            ->add('rightResponse', 'checkbox', array('required' => false, 'label' => 'Choice.rightResponse'))
-            ->add('positionForce', 'checkbox', array('required' => false, 'label' => 'Choice.positionForce'))
+        $builder->add('label', 'textarea')//, array('attr' => array('class' => 'tinymce', 'data-theme' => 'medium'), 'label' => 'Choice.label'))
+                ->add('ordre', 'text')
+                ->add('weight', 'text', array('required' => false, 'label' => 'Choice.label'))
+                ->add('feedback', 'textarea', array('required' => false, 'label' => 'Choice.feedback'))
+                ->add('rightResponse', 'checkbox', array('required' => false, 'label' => 'Choice.rightResponse'))
+                ->add('positionForce', 'checkbox', array('required' => false, 'label' => 'Choice.positionForce'))
             
             //->add('interactionQCM')
         ;
@@ -63,8 +62,6 @@ class ChoiceType extends AbstractType
 
     public function getDefaultOptions(array $options)
     {
-        return array(
-            'data_class'      => 'UJM\ExoBundle\Entity\Choice'
-        );
+        return array('data_class' => 'UJM\ExoBundle\Entity\Choice');
     }
 }

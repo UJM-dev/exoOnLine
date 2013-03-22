@@ -56,9 +56,9 @@ class CategoryRepository extends EntityRepository
     {
         $qb = $this->createQueryBuilder('c');
 
-        $qb ->join('c.user', 'u')
-            ->where($qb->expr()->in('u.id', $uid))
-            ->orderBy('c.value', 'ASC');
+        $qb->join('c.user', 'u')
+           ->where($qb->expr()->in('u.id', $uid))
+           ->orderBy('c.value', 'ASC');
 
         //request used by a form, queryBuilder must be given and not an array
         return $qb;

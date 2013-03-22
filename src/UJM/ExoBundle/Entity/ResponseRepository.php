@@ -55,10 +55,10 @@ class ResponseRepository extends EntityRepository
     {
         $qb = $this->createQueryBuilder('r');
 
-        $qb ->join('r.paper', 'p')
-            ->join('r.interaction', 'i')
-            ->where($qb->expr()->in('p.id', $paperID))
-            ->andWhere($qb->expr()->in('i.id', $interactionID));
+        $qb->join('r.paper', 'p')
+           ->join('r.interaction', 'i')
+           ->where($qb->expr()->in('p.id', $paperID))
+           ->andWhere($qb->expr()->in('i.id', $interactionID));
 
         return $qb->getQuery()->getResult();
     }
@@ -71,12 +71,11 @@ class ResponseRepository extends EntityRepository
     {
         $qb = $this->createQueryBuilder('r');
 
-        $qb ->join('r.paper', 'p')
-            ->join('p.user', 'u')
-            ->where($qb->expr()->in('p.id', $paperID))
-            ->andWhere($qb->expr()->in('u.id', $uid));
+        $qb->join('r.paper', 'p')
+           ->join('p.user', 'u')
+           ->where($qb->expr()->in('p.id', $paperID))
+           ->andWhere($qb->expr()->in('u.id', $uid));
 
         return $qb->getQuery()->getResult();
     }
-
 }

@@ -51,19 +51,16 @@ class LoadData implements FixtureInterface
         $this->manager = $manager;
 
         $val_tqcm = array('Multiple response', 'Unique response');
-        foreach($val_tqcm as $val)
-        {
+        foreach ($val_tqcm as $val) {
             $this->newTQCM($val);
         }
 
         $val_role = array('ROLE_ADMIN', 'ROLE_USER');
-        foreach($val_role as $val)
-        {
+        foreach ($val_role as $val) {
             $this->newRole($val);
         }
 
         $this->manager->flush();
-        
     }
 
     private function newTQCM($val)
@@ -81,6 +78,4 @@ class LoadData implements FixtureInterface
 
         $this->manager->persist($role);
     }
-
-
 }

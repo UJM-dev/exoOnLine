@@ -99,6 +99,7 @@ class InteractionQCM
      */
     private $choices;
 
+    
     /**
      * Constructs a new instance of choices
      */
@@ -236,7 +237,6 @@ class InteractionQCM
 
     public function removeChoice(\UJM\ExoBundle\Entity\Choice $choice)
     {
-        
     }
     
     public function shuffleChoices()
@@ -247,15 +247,12 @@ class InteractionQCM
         $tabFixed   = array();
         $tab        = array();
         $choices = new \Doctrine\Common\Collections\ArrayCollection;
-        while($i<count($this->choices))
-        {
-            if ($this->choices[$i]->getPositionForce() == false)
-            {
+        
+        while ($i<count($this->choices)) {
+            if ($this->choices[$i]->getPositionForce() == false) {
                 $tabShuffle[$i] = $i;
                 $tabFixed[] = -1;
-            }
-            else
-            {
+            } else {
                 $tabFixed[] = $i;
             }
             $i++;
@@ -264,14 +261,10 @@ class InteractionQCM
 
 
         $i = 0;
-        while($i<count($this->choices))
-        {
-            if($tabFixed[$i] != -1)
-            {
+        while ($i<count($this->choices)) {
+            if ($tabFixed[$i] != -1) {
                 $choices[] = $this->choices[$i];
-            }
-            else
-            {
+            } else {
                 $index = $tabShuffle[0];
                 $choices[] = $this->choices[$index];
                 unset($tabShuffle[0]);
@@ -294,11 +287,9 @@ class InteractionQCM
         //shuffle($tab);
         //asort($tab, SORT_NUMERIC);
         asort($tab);
-        foreach($tab as $indice => $valeur)
-        {
+        foreach ($tab as $indice => $valeur) {
             $choices[] = $this->choices[$indice];
         }
         $this->choices = $choices;
     }    
-    
 }

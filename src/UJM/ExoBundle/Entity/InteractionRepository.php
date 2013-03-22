@@ -56,8 +56,8 @@ class InteractionRepository extends EntityRepository
     {
         $qb = $this->createQueryBuilder('i');
 
-        $qb ->join('i.question', 'q')
-            ->where($qb->expr()->in('q.id', $questionId));
+        $qb->join('i.question', 'q')
+           ->where($qb->expr()->in('q.id', $questionId));
 
         return $qb->getQuery()->getResult();
     }
@@ -70,12 +70,12 @@ class InteractionRepository extends EntityRepository
     {
         $qb = $this->createQueryBuilder('i');
 
-        $qb ->join('i.question', 'q')
-            ->join('q.category', 'c')
-            ->join('q.user', 'u')
-            ->where($qb->expr()->in('u.id', $uid))
-            ->orderBy('c.value', 'ASC')
-            ->addOrderBy('q.title', 'ASC');
+        $qb->join('i.question', 'q')
+           ->join('q.category', 'c')
+           ->join('q.user', 'u')
+           ->where($qb->expr()->in('u.id', $uid))
+           ->orderBy('c.value', 'ASC')
+           ->addOrderBy('q.title', 'ASC');
 
         return $qb->getQuery()->getResult();
     }
@@ -95,25 +95,21 @@ class InteractionRepository extends EntityRepository
         $query = $em->createQuery($dql);
         $eqs = $query->getResult();
 
-        foreach ($eqs as $eq)
-        {
+        foreach ($eqs as $eq) {
             $questionsList[] = $eq->getQuestion()->getId();
         }
 
-        if( $shuffle == 1)
-        {
+        if ($shuffle == 1) {
             shuffle($questionsList);
         }
 
         $nbQuestionsTot = count($questionsList);
 
-        if($nbQuestions > 0)
-        {
+        if ($nbQuestions > 0) {
             $i = 0;
             $y = 0;
             $newQuestionsList = array();
-            while($i < $nbQuestions)
-            {
+            while ($i < $nbQuestions) {
                 $y = rand(0, $nbQuestionsTot-1);
                 $newQuestionsList[] = $questionsList[$y];
                 unset($questionsList[$y]);
@@ -125,8 +121,7 @@ class InteractionRepository extends EntityRepository
             $questionsList = $newQuestionsList;
         }
 
-        foreach ($questionsList as $q)
-        {
+        foreach ($questionsList as $q) {
             $dql = 'SELECT i FROM UJM\ExoBundle\Entity\Interaction i JOIN i.question q '
                   . 'WHERE q='.$q;
             $query = $em->createQuery($dql);
@@ -178,6 +173,5 @@ class InteractionRepository extends EntityRepository
         $query = $em->createQuery($dql);
         $interactions = $query->getResult();
         return $interactions;
-
     }
 }

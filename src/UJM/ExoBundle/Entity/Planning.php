@@ -76,7 +76,6 @@ class Planning
     private $groupe;
 
 
-
     /**
      * Get id
      *

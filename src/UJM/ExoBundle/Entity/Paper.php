@@ -115,7 +115,8 @@ class Paper
      */
      private $exercise;
 
-    /**
+     
+     /**
      * Get id
      *
      * @return integer 
@@ -284,5 +285,4 @@ class Paper
     {
         $this->exercise = $exercise;
     }
-
 }
