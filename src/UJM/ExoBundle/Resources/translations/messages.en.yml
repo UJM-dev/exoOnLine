@@ -242,3 +242,7 @@ Couleur: Color
 Points: Points
 cercle: circle
 rectangle: rectangle
+consignes: Instructions
+position: => Place pointers below (red cross) on the picture. The pointer's center defines your answer.
+selection: => Click on a pointer to select it and click again on the picture to define your answer.
+raz: => To reset pointers, press "c".

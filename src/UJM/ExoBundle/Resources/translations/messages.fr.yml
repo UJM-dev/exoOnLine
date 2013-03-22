@@ -243,3 +243,7 @@ Couleur: Couleur
 Points: Points
 cercle: cercle
 rectangle: rectangle
+consignes: Consignes
+position: => Positionner le(s) pointeur(s) ci-dessous (croix rouge) sur l'image. La position du centre du pointeur défini votre réponse.
+selection: => Cliquez sur un pointeurs pour le sélectionner et cliquez ensuite sur l'image pour définir votre zone de réponse.
+raz: => Pour remettre à zéro tous les pointeurs, appuyez sur "c".
